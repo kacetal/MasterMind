@@ -45,6 +45,14 @@ public class GamePlayDialog {
         return new SecretBlock(intArrFromInput);
     }
 
+    public String nbrOfTryDlg(final int nbrOfTry) {
+        if (nbrOfTry > 1) {
+            return " essais";
+        } else {
+            return " essai";
+        }
+    }
+
     private int[] arrayExtender(final int[] arrToExt, final int limit) {
 
         int[] newArr = new int[limit];

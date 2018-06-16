@@ -2,6 +2,7 @@ package fr.kacetal.mastermind.model;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class SecretBlock {
 
@@ -72,7 +73,8 @@ public class SecretBlock {
      */
     @Override
     public String toString() {
-        return "Block Of Numbers [" + Arrays.toString(arrOfNbr) + "]";
+
+        return Arrays.stream(arrOfNbr).mapToObj(String::valueOf).collect(Collectors.joining());
     }
 
     /* (non-Javadoc)

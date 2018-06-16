@@ -1,6 +1,7 @@
 package fr.kacetal.mastermind;
 
 import fr.kacetal.mastermind.controller.RechercheComparator;
+import fr.kacetal.mastermind.controller.functions.RechercheChallengerFunction;
 import fr.kacetal.mastermind.model.Game;
 import fr.kacetal.mastermind.model.SecretBlock;
 import fr.kacetal.mastermind.view.GameInitDialog;
@@ -35,27 +36,6 @@ public class Main {
 
     public void play() {
         game = gameInitializateur();
-        SecretBlock secretBlock = new SecretBlock(game);
-        GamePlayDialog gamePlayDialog = new GamePlayDialog(game);
-        String response;
-        String winnerResponse = "";
-        for (int i = 0; i < game.getSecretBlockLongeur(); i++) {
-            winnerResponse += "=";
-        }
-        int[] qst, rsp;
-        System.out.println("Devinez nombre qui contien " + game.getSecretBlockLongeur() + " chiffres");
-        do {
-            qst = secretBlock.getArrOfNbr();
-            rsp = gamePlayDialog.getSecretBlockResponse().getArrOfNbr();
-            Arrays.stream(rsp).forEach(System.out::print);
-            System.out.println();
-            if (game.isDevMode()) {
-                Arrays.stream(qst).forEachOrdered(System.out::print);
-                System.out.println();
-            }
-            rsp = RechercheComparator.arrCompare(qst, rsp);
-            response = RechercheComparator.intToStrRecherche(rsp);
-            System.out.println(response);
-        } while (!response.equals(winnerResponse));
+        new RechercheChallengerFunction(game).play();
     }
 }
