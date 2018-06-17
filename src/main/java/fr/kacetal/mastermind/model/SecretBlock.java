@@ -73,7 +73,6 @@ public class SecretBlock {
      */
     @Override
     public String toString() {
-
         return Arrays.stream(arrOfNbr).mapToObj(String::valueOf).collect(Collectors.joining());
     }
 
@@ -107,9 +106,6 @@ public class SecretBlock {
         if (secretBlockLongeur != other.secretBlockLongeur) {
             return false;
         }
-        if (!Arrays.equals(arrOfNbr, other.arrOfNbr)) {
-            return false;
-        }
-        return true;
+        return Arrays.equals(arrOfNbr, other.arrOfNbr);
     }
 }

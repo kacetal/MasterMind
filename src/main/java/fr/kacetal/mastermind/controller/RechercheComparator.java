@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
  */
 public class RechercheComparator extends ArraysComparator {
 
-    public static String intToStrRecherche(final int[] intArr) {
+    @Override
+    public String intToStrRechercheNormalizer(final int[] intArr) {
         return Arrays.stream(intArr)
                 .sequential()
                 .mapToObj(i -> i == 0 ? "=" : (i > 0 ? "+" : "-") )
                 .collect(Collectors.joining());
-//                .toString();
     }
 }

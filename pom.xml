@@ -34,8 +34,6 @@
         <testSourceDirectory>${basedir}\src\test\java</testSourceDirectory>
         <outputDirectory>${basedir}\target\classes</outputDirectory>
         <testOutputDirectory>${basedir}\target\test-classes</testOutputDirectory>
-
-
         <resources>
             <resource>
                 <directory>${basedir}\src\main\resources</directory>
@@ -69,6 +67,7 @@
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
+                        <encoding>UTF-8</encoding>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -100,7 +99,7 @@
                     <configuration>
                         <archive>
                             <manifest>
-                                <mainClass>fully.qualified.MainClass</mainClass>
+                                <mainClass>fr.kacetal.mastermind.Main</mainClass>
                             </manifest>
                         </archive>
                         <descriptorRefs>
@@ -117,6 +116,7 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>

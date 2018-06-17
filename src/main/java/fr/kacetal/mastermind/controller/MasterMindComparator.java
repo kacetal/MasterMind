@@ -3,8 +3,6 @@
  */
 package fr.kacetal.mastermind.controller;
 
-import fr.kacetal.mastermind.model.SecretBlock;
-
 import java.util.Arrays;
 
 /**
@@ -13,23 +11,23 @@ import java.util.Arrays;
  */
 public class MasterMindComparator extends ArraysComparator {
 
-    private String masterMindComparator(SecretBlock sbSec, SecretBlock sbRep) {
+    @Override
+    protected String intToStrMastermindNormalizer(final int[] sbQst, final int[] sbRsp) {
 
-        if (Arrays.equals(arrCompare(sbSec.getArrOfNbr(), sbRep.getArrOfNbr()),
-                arrCompare(sbSec.getArrOfNbr(), sbSec.getArrOfNbr()))
-                ) {
+        if (Arrays.equals(arrCompare(sbQst, sbRsp), arrCompare(sbQst, sbQst))) {
             return "Vous avez gagné";
         }
+
         int present = 0;
         int goodPlace = 0;
 
-        for (int i = 0; i < sbSec.getArrOfNbr().length; i++) {
-            for (int j = 0; j < sbRep.getArrOfNbr().length; j++) {
-                if (sbSec.getNbrAt(i) == sbRep.getNbrAt(j) && i == j) {
+        for (int i = 0; i < sbQst.length; i++) {
+            for (int j = 0; j < sbRsp.length; j++) {
+                if (sbQst[i] == sbRsp[j] && i == j) {
                     goodPlace++;
                     present++;
                     break;
-                } else if (sbSec.getNbrAt(i) == sbRep.getNbrAt(j)) {
+                } else if (sbQst[i] == sbRsp[j]) {
                     present++;
                     break;
                 }

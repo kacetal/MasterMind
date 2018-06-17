@@ -5,6 +5,9 @@ import fr.kacetal.mastermind.model.Game;
 import fr.kacetal.mastermind.model.SecretBlock;
 import fr.kacetal.mastermind.view.GamePlayDialog;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class RechercheChallengerFunction extends RechercheComparator {
 
     private final Game game;
@@ -22,20 +25,21 @@ public class RechercheChallengerFunction extends RechercheComparator {
         secretArray = secretBlock.getArrOfNbr();
     }
 
+    @Override
     public void play() {
         SecretBlock responseBlock;
 
-        int[] responseArray, respArrNormalized;
+        int[] responseArray, rspArrDiff;
 
-        String response, responseToWin = "";
+        String astuce, responseToWin;
 
         int nbrOfTry = game.getTryNumber();
 
-        for (int i = 0; i < game.getSecretBlockLongeur(); i++) {
-            responseToWin += "=";
-        }
+        responseToWin = Stream.generate(() -> "=")
+                .limit(game.getSecretBlockLongeur())
+                .collect(Collectors.joining());
 
-        System.out.println("Devinez nombre qui contien " + game.getSecretBlockLongeur() + " chiffres");
+        System.out.println("Devinez nombre qui contient " + game.getSecretBlockLongeur() + " chiffres");
         do {
             System.out.print("Vous avez " + nbrOfTry);
             System.out.println(gamePlayDialog.nbrOfTryDlg(nbrOfTry--));
@@ -43,25 +47,22 @@ public class RechercheChallengerFunction extends RechercheComparator {
             responseBlock = gamePlayDialog.getSecretBlockResponse();
             responseArray = responseBlock.getArrOfNbr();
 
-            System.out.println("Votre reponse: ->" + responseBlock.toString() + "<-");
+            System.out.println("Votre reponse: |" + responseBlock + "|");
 
             if (game.isDevMode()) {
-                System.out.println("Vraie reponse: ->" + secretBlock + "<-");
+                System.out.println("Vraie reponse: |" + secretBlock + "|");
             }
 
-            respArrNormalized = RechercheComparator.arrCompare(secretArray, responseArray);
-            response = RechercheComparator.intToStrRecherche(respArrNormalized);
+            rspArrDiff = arrCompare(secretArray, responseArray);
+            astuce = intToStrRechercheNormalizer(rspArrDiff);
+            System.out.println("Astuce cachée: |" + astuce + "|");
 
-            if (!response.equals(responseToWin) && nbrOfTry <= 0) {
-                System.out.println("Astuce cachée: ->" + response + "<-");
+            if (!astuce.equals(responseToWin) && nbrOfTry <= 0) {
                 System.out.println("Mauvaise reponse.\nVous n'avez plus d'essai.\nPerdu!");
                 break;
-            } else if (!response.equals(responseToWin)) {
-                System.out.println("Astuce cachée: ->" + response + "<-");
+            } else if (!astuce.equals(responseToWin)) {
                 System.out.println("Mauvaise reponse.");
-                continue;
-            } else if (response.equals(responseToWin)) {
-                System.out.println("Astuce cachée: ->" + response + "<-");
+            } else if (astuce.equals(responseToWin)) {
                 System.out.println("Félicitation! Vous avez gagné!");
                 System.out.println("Il vous reste encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
                 break;

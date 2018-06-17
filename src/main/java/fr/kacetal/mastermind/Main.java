@@ -1,15 +1,11 @@
 package fr.kacetal.mastermind;
 
-import fr.kacetal.mastermind.controller.RechercheComparator;
-import fr.kacetal.mastermind.controller.functions.RechercheChallengerFunction;
+import fr.kacetal.mastermind.controller.functions.RechercheDefenseFunction;
 import fr.kacetal.mastermind.model.Game;
-import fr.kacetal.mastermind.model.SecretBlock;
 import fr.kacetal.mastermind.view.GameInitDialog;
-import fr.kacetal.mastermind.view.GamePlayDialog;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 public class Main {
 
@@ -21,7 +17,7 @@ public class Main {
         new Main().play();
     }
 
-    public Game gameInitializateur() {
+    private Game gameInitializateur() {
         Game.GameBuilder builder = new Game.GameBuilder();
         GameInitDialog dialog = new GameInitDialog();
 
@@ -34,8 +30,8 @@ public class Main {
                       .buildGame();
     }
 
-    public void play() {
+    private void play() {
         game = gameInitializateur();
-        new RechercheChallengerFunction(game).play();
+        new RechercheDefenseFunction(game).play();
     }
 }
