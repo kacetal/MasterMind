@@ -11,8 +11,6 @@ import fr.kacetal.mastermind.view.GameInitDialog;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,15 +37,6 @@ public class Main {
                 Files.copy(resInStream, configPath);
             } catch (FileAlreadyExistsException e) {
                 String str = "config.properties already existé";
-                byte[] strBytes = str.getBytes(StandardCharsets.UTF_8);
-                String strUTF8 = null;
-                try {
-                    strUTF8 = new String(strBytes, "UTF-8");
-                } catch (UnsupportedEncodingException e1) {
-                    e1.printStackTrace();
-                }
-                System.out.println(strUTF8);
-                str = "ééé";
                 System.out.println(str);
             } catch (IOException e) {
                 e.printStackTrace();
