@@ -5,10 +5,10 @@ import fr.kacetal.mastermind.model.Game;
 import fr.kacetal.mastermind.model.SecretBlock;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static fr.kacetal.mastermind.controller.functions.RechercheDefenseFunction.responseAIGenerator;
 import static fr.kacetal.mastermind.controller.functions.RechercheDefenseFunction.responseLimitsAnalyze;
 
 public class RechercheDuelFunction extends RechercheComparator {
@@ -61,17 +61,29 @@ public class RechercheDuelFunction extends RechercheComparator {
             if (firstLoop) {
                 responseAIArray = IntStream.generate(() -> 5).limit(game.getSecretBlockLongeur()).toArray();
                 responseAIBlock = new SecretBlock(responseAIArray);
-                System.out.println("AI est proposée: |" + responseAIBlock + "|");
+                System.out.print("AI calcule...:   |");
+                for (int i = 0; i < game.getSecretBlockLongeur(); i++) {
+                    System.out.print('*');
+                    pause(1000);
+                }
+                System.out.println("|");
+                arrDiffAI = arrCompare(secretArray, responseAIArray);
+                astuceAI = intToStrRechercheNormalizer(arrDiffAI);
+                System.out.println("Astuce pour AI:  |" + astuceAI + "|");
                 firstLoop = false;
             } else {
                 System.out.print("AI recalcule...: |");
                 responseAIGenerator(minAILimit, maxAILimit, responseAIArray, game.getSecretBlockLongeur());
+                arrDiffAI = arrCompare(secretArray, responseAIArray);
+                astuceAI = intToStrRechercheNormalizer(arrDiffAI);
+                System.out.println("Astuce pour AI:  |" + astuceAI + "|");
             }
 
             if (game.isDevMode()) {
                 limMIN = Arrays.stream(minAILimit).mapToObj(String::valueOf).collect(Collectors.joining());
                 limMAX = Arrays.stream(maxAILimit).mapToObj(String::valueOf).collect(Collectors.joining());
                 System.out.println("AI max limite:   |" + limMAX + "|");
+                System.out.println("AI est proposé:  |" + responseAIBlock + "|");
                 System.out.println("AI min limite:   |" + limMIN + "|");
                 System.out.println("Vraie reponse:   |" + secretBlock + "|");
             }
@@ -79,8 +91,7 @@ public class RechercheDuelFunction extends RechercheComparator {
             pause(2000);
 
 
-            arrDiffAI = arrCompare(secretArray, responseAIArray);
-            astuceAI = intToStrRechercheNormalizer(arrDiffAI);
+
 
             if (astucePlayer.equals(astuceAI) && isWinner(astucePlayer)) {
                 System.out.println("La partie NULL!");
@@ -104,5 +115,19 @@ public class RechercheDuelFunction extends RechercheComparator {
             responseLimitsAnalyze(minAILimit, maxAILimit, responseAIArray, arrDiffAI, game.getSecretBlockLongeur());
 
         } while (true);
+    }
+
+    private void responseAIGenerator(int[] min, int[] max, int[] responseArray, int longeur) {
+        for (int i = 0; i < longeur; i++) {
+            pause(1000);
+            if (min[i] == max[i]) {
+                responseArray[i] = min[i];
+            } else {
+                responseArray[i] = new Random().ints(1, min[i], max[i]).findFirst().getAsInt();
+            }
+            System.out.print('*');
+        }
+        pause(1000);
+        System.out.println("|");
     }
 }

@@ -151,7 +151,7 @@ public class Game {
                 this.tryNumber = new Integer(properties.getProperty("tryNumber"));
                 return this;
             } catch (IOException ex) {
-                ex.printStackTrace();
+                System.err.println("File not found. tryNumber = 8");
                 this.tryNumber = 8;
                 return this;
             }
@@ -168,7 +168,7 @@ public class Game {
                 this.secretBlockLongeur = new Integer(properties.getProperty("secretBlockLongeur"));
                 return this;
             } catch (IOException ex) {
-                ex.printStackTrace();
+                System.err.println("File not found. secretBlockLongeur = 4");
                 this.secretBlockLongeur = 4;
                 return this;
             }

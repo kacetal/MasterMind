@@ -16,6 +16,7 @@ public class RechercheComparator extends ArraysComparator {
     protected final Game game;
 
     protected final GamePlayDialog gamePlayDialog;
+
     protected final String responseToWin;
 
     protected SecretBlock secretBlock;

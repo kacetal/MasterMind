@@ -39,6 +39,7 @@
                 <directory>${basedir}\src\main\resources</directory>
                 <includes>
                     <include>config.properties</include>
+                    <include>playForWin.bat</include>
                 </includes>
             </resource>
         </resources>
@@ -62,6 +63,7 @@
                     <artifactId>maven-resources-plugin</artifactId>
                     <configuration>
                         <encoding>${project.build.sourceEncoding}</encoding>
+
                     </configuration>
                 </plugin>
                 <plugin>
