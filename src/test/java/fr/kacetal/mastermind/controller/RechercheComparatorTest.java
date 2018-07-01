@@ -12,7 +12,7 @@ public class RechercheComparatorTest {
         int[] response = new int[]{4, 2, 7, 8};
         String expected = "-=--";
         int[] intActual = new ArraysComparator().arrCompare(question, response);
-        String actual = new RechercheComparator().intToStrRechercheNormalizer(intActual);
+        String actual = new RechercheComparator(null).intToStrRechercheNormalizer(intActual);
         assertEquals(expected, actual);
     }
 
@@ -22,7 +22,7 @@ public class RechercheComparatorTest {
         int[] response = new int[]{2, 2, 1, 4};
         String expected = "-=+=";
         int[] intActual = new ArraysComparator().arrCompare(question, response);
-        String actual = new RechercheComparator().intToStrRechercheNormalizer(intActual);
+        String actual = new RechercheComparator(null).intToStrRechercheNormalizer(intActual);
         assertEquals(expected, actual);
     }
 
@@ -32,7 +32,7 @@ public class RechercheComparatorTest {
         int[] response = new int[]{1, 2, 3, 4};
         String expected = "====";
         int[] intActual = new ArraysComparator().arrCompare(question, response);
-        String actual = new RechercheComparator().intToStrRechercheNormalizer(intActual);
+        String actual = new RechercheComparator(null).intToStrRechercheNormalizer(intActual);
         assertEquals(expected, actual);
     }
 }

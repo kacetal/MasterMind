@@ -1,6 +1,3 @@
-/**
- *
- */
 package fr.kacetal.mastermind.controller;
 
 import java.util.stream.IntStream;
@@ -27,5 +24,13 @@ public class ArraysComparator {
     }
 
     public void play() {
+    }
+
+    static protected void pause(int milliSecPause) {
+        try {
+            Thread.sleep(milliSecPause);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

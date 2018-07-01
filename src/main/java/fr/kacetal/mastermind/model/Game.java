@@ -1,17 +1,10 @@
-/**
- *
- */
 package fr.kacetal.mastermind.model;
 
-import fr.kacetal.mastermind.controller.ArraysComparator;
-import fr.kacetal.mastermind.controller.RechercheComparator;
-
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Stream;
 
 /**
  * @author artem
@@ -30,32 +23,12 @@ public class Game {
 
     private final GameMode gameMode;
 
-    private final Map<Boolean, Map<GameType, Map<GameMode, ArraysComparator>>> generalBehavior;
-
-    /**
-     * @param isDevMode
-     * @param tryNumber
-     * @param secretBlockLongeur
-     * @param gameType
-     * @param gameMode
-     * @param gameBehaviors
-     */
     private Game(final GameBuilder builder) {
         this.isDevMode = builder.isDevMode;
         this.tryNumber = builder.tryNumber;
         this.secretBlockLongeur = builder.secretBlockLongeur;
         this.gameType = builder.gameType;
         this.gameMode = builder.gameMode;
-
-        Map<GameMode, ArraysComparator> modeBehaviour = new HashMap<>();
-        modeBehaviour.put(gameMode, new RechercheComparator());
-
-        Map<GameType, Map<GameMode, ArraysComparator>> typeBehaviour = new HashMap<>();
-        typeBehaviour.put(gameType, modeBehaviour);
-
-        generalBehavior = new HashMap<>();
-        generalBehavior.put(isDevMode, typeBehaviour);
-        RechercheComparator rc = (RechercheComparator) generalBehavior.get(isDevMode).get(gameType).get(gameMode);
     }
 
     /**
@@ -93,7 +66,7 @@ public class Game {
         return gameMode;
     }
 
-    /* (non-Javadoc)
+    /*
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -135,10 +108,7 @@ public class Game {
         if (secretBlockLongeur != other.secretBlockLongeur) {
             return false;
         }
-        if (tryNumber != other.tryNumber) {
-            return false;
-        }
-        return true;
+        return tryNumber == other.tryNumber;
     }
 
     /* (non-Javadoc)
@@ -162,9 +132,6 @@ public class Game {
 
         private GameMode gameMode;
 
-        private Properties gameProperties;
-
-
         /**
          * @param isDevMode the isDevMode to set
          */
@@ -174,43 +141,35 @@ public class Game {
         }
 
         /**
-         * @param tryNumber the tryNumber to set
+         * @param propertiesPath the tryNumber to set
          */
         public GameBuilder setTryNumber(final Path propertiesPath) {
 
             try (InputStream input = new FileInputStream(propertiesPath.toFile())){
                 Properties properties = new Properties();
                 properties.load(input);
-                Integer tryNmbr = new Integer(properties.getProperty("tryNumber"));
-                this.tryNumber = tryNmbr;
-            } catch (FileNotFoundException ex ) {
-                ex.printStackTrace();
-                this.tryNumber = 8;
+                this.tryNumber = new Integer(properties.getProperty("tryNumber"));
+                return this;
             } catch (IOException ex) {
                 ex.printStackTrace();
                 this.tryNumber = 8;
-            } finally {
                 return this;
             }
         }
 
         /**
-         * @param secretBlockLongeur the secretBlockLongeur to set
+         * @param propertiesPath the secretBlockLongeur to set
          */
         public GameBuilder setSecretBlockLongeur(final Path propertiesPath) {
 
             try (InputStream input = new FileInputStream(propertiesPath.toFile())){
                 Properties properties = new Properties();
                 properties.load(input);
-                Integer tryNmbr = new Integer(properties.getProperty("secretBlockLongeur"));
-                this.secretBlockLongeur = tryNmbr;
-            } catch (FileNotFoundException ex ) {
-                ex.printStackTrace();
-                this.secretBlockLongeur = 4;
+                this.secretBlockLongeur = new Integer(properties.getProperty("secretBlockLongeur"));
+                return this;
             } catch (IOException ex) {
                 ex.printStackTrace();
                 this.secretBlockLongeur = 4;
-            } finally {
                 return this;
             }
         }
