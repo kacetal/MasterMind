@@ -4,6 +4,7 @@ import fr.kacetal.mastermind.controller.RechercheComparator;
 import fr.kacetal.mastermind.model.Game;
 import fr.kacetal.mastermind.model.SecretBlock;
 
+
 public class RechercheChallengerFunction extends RechercheComparator {
 
     public RechercheChallengerFunction(final Game game) {
@@ -12,6 +13,7 @@ public class RechercheChallengerFunction extends RechercheComparator {
 
     @Override
     public void play() {
+        nbrOfTry = game.getTryNumber();
 
         secretBlock = new SecretBlock(game);
         secretArray = secretBlock.getArrOfNbr();
@@ -54,6 +56,6 @@ public class RechercheChallengerFunction extends RechercheComparator {
 
 
     private String getAstuce() {
-        return intToStrRechercheNormalizer(arrCompare(secretArray, responseArray));
+        return intArrToStrNormalizer(arrCompare(secretArray, responseArray));
     }
 }

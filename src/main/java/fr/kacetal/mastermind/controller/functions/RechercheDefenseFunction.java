@@ -32,7 +32,7 @@ public class RechercheDefenseFunction extends RechercheComparator {
         }
     }
 
-    static void responseAIGenerator(int[] min, int[] max, int[] responseArray, int longeur) {
+    private static void responseAIGenerator(int[] min, int[] max, int[] responseArray, int longeur) {
         for (int i = 0; i < longeur; i++) {
             pause(1000);
             if (min[i] == max[i]) {
@@ -48,9 +48,7 @@ public class RechercheDefenseFunction extends RechercheComparator {
 
     @Override
     public void play() {
-
-        secretBlock = new SecretBlock(game);
-        secretArray = secretBlock.getArrOfNbr();
+        nbrOfTry = game.getTryNumber();
 
         String limMIN, limMAX;
 
@@ -70,7 +68,7 @@ public class RechercheDefenseFunction extends RechercheComparator {
             System.out.println(gamePlayDialog.nbrOfTryDlg(nbrOfTry--));
 
             arrDiffAI = arrCompare(secretArray, responseArray);
-            astuce = intToStrRechercheNormalizer(arrDiffAI);
+            astuce = intArrToStrNormalizer(arrDiffAI);
 
             System.out.println();
 

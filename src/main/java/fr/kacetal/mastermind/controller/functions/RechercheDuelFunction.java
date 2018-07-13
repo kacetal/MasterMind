@@ -31,6 +31,7 @@ public class RechercheDuelFunction extends RechercheComparator {
 
     @Override
     public void play() {
+        nbrOfTry = game.getTryNumber();
 
         secretBlock = new SecretBlock(game);
         secretArray = secretBlock.getArrOfNbr();
@@ -53,7 +54,7 @@ public class RechercheDuelFunction extends RechercheComparator {
             responsePlayerArray = (responsePlayerBlock = getPlayerResponse()).getArrOfNbr();
 
             System.out.println("Votre reponse:   |" + responsePlayerBlock + "|");
-            astucePlayer = intToStrRechercheNormalizer(arrCompare(secretArray, responsePlayerArray));
+            astucePlayer = intArrToStrNormalizer(arrCompare(secretArray, responsePlayerArray));
             pause(1000);
             System.out.println("Votre astuce est:|" + astucePlayer + "|");
             pause(1000);
@@ -68,14 +69,14 @@ public class RechercheDuelFunction extends RechercheComparator {
                 }
                 System.out.println("|");
                 arrDiffAI = arrCompare(secretArray, responseAIArray);
-                astuceAI = intToStrRechercheNormalizer(arrDiffAI);
+                astuceAI = intArrToStrNormalizer(arrDiffAI);
                 System.out.println("Astuce pour AI:  |" + astuceAI + "|");
                 firstLoop = false;
             } else {
                 System.out.print("AI recalcule...: |");
                 responseAIGenerator(minAILimit, maxAILimit, responseAIArray, game.getSecretBlockLongeur());
                 arrDiffAI = arrCompare(secretArray, responseAIArray);
-                astuceAI = intToStrRechercheNormalizer(arrDiffAI);
+                astuceAI = intArrToStrNormalizer(arrDiffAI);
                 System.out.println("Astuce pour AI:  |" + astuceAI + "|");
             }
 
@@ -89,9 +90,6 @@ public class RechercheDuelFunction extends RechercheComparator {
             }
 
             pause(2000);
-
-
-
 
             if (astucePlayer.equals(astuceAI) && isWinner(astucePlayer)) {
                 System.out.println("La partie NULL!");

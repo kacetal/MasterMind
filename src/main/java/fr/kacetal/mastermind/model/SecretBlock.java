@@ -17,7 +17,7 @@ public class SecretBlock {
 
     public SecretBlock(final int[] arrOfNbr) {
         this.secretBlockLongeur = arrOfNbr.length;
-        this.arrOfNbr = arrOfNbr;
+        this.arrOfNbr = arrOfNbr.clone();
     }
 
     public SecretBlock(final Game game) {
@@ -25,15 +25,24 @@ public class SecretBlock {
         this.arrOfNbr = new Random().ints(this.secretBlockLongeur, 0, 10).toArray();
     }
 
-    public SecretBlock(final int nbrToArr, final Game game) {
+    public SecretBlock(final Game game, final GameType type) {
         this.secretBlockLongeur = game.getSecretBlockLongeur();
-        this.arrOfNbr = String.valueOf(nbrToArr).chars().map(Character::getNumericValue).toArray();
+        if (type == GameType.MASTERMIND) {
+            this.arrOfNbr = new Random().ints(this.secretBlockLongeur, 0, game.getNmbrUtilisable()).toArray();
+            return;
+        }
+        this.arrOfNbr = new Random().ints(this.secretBlockLongeur, 0, 10).toArray();
     }
 
-    public SecretBlock(final String strToNbrArr, final Game game) {
-        this.secretBlockLongeur = game.getSecretBlockLongeur();
-        this.arrOfNbr = strToNbrArr.chars().map(Character::getNumericValue).toArray();
-    }
+//    public SecretBlock(final int nbrToArr, final Game game) {
+//        this.secretBlockLongeur = game.getSecretBlockLongeur();
+//        this.arrOfNbr = String.valueOf(nbrToArr).chars().map(Character::getNumericValue).toArray();
+//    }
+//
+//    public SecretBlock(final String strToNbrArr, final Game game) {
+//        this.secretBlockLongeur = game.getSecretBlockLongeur();
+//        this.arrOfNbr = strToNbrArr.chars().map(Character::getNumericValue).toArray();
+//    }
 
     public int[] getArrOfNbr() {
         return arrOfNbr;
@@ -58,8 +67,8 @@ public class SecretBlock {
             number = 9;
         }
 
-        for (int i = 0; i < arrOfNbr.length; i++) {
-            if (number == arrOfNbr[i]) {
+        for (int anArrOfNbr : arrOfNbr) {
+            if (number == anArrOfNbr) {
                 return true;
             }
         }

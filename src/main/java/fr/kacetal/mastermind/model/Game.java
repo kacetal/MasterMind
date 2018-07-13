@@ -19,6 +19,8 @@ public class Game {
 
     private final int secretBlockLongeur;
 
+    private final int nmbrUtilisable;
+
     private final GameType gameType;
 
     private final GameMode gameMode;
@@ -27,6 +29,7 @@ public class Game {
         this.isDevMode = builder.isDevMode;
         this.tryNumber = builder.tryNumber;
         this.secretBlockLongeur = builder.secretBlockLongeur;
+        this.nmbrUtilisable = builder.nmbrUtilisable;
         this.gameType = builder.gameType;
         this.gameMode = builder.gameMode;
     }
@@ -50,6 +53,10 @@ public class Game {
      */
     public int getSecretBlockLongeur() {
         return secretBlockLongeur;
+    }
+
+    public int getNmbrUtilisable() {
+        return nmbrUtilisable;
     }
 
     /**
@@ -128,6 +135,8 @@ public class Game {
 
         private int secretBlockLongeur;
 
+        private int nmbrUtilisable;
+
         private GameType gameType;
 
         private GameMode gameMode;
@@ -144,7 +153,6 @@ public class Game {
          * @param propertiesPath the tryNumber to set
          */
         public GameBuilder setTryNumber(final Path propertiesPath) {
-
             try (InputStream input = new FileInputStream(propertiesPath.toFile())){
                 Properties properties = new Properties();
                 properties.load(input);
@@ -161,7 +169,6 @@ public class Game {
          * @param propertiesPath the secretBlockLongeur to set
          */
         public GameBuilder setSecretBlockLongeur(final Path propertiesPath) {
-
             try (InputStream input = new FileInputStream(propertiesPath.toFile())){
                 Properties properties = new Properties();
                 properties.load(input);
@@ -170,6 +177,26 @@ public class Game {
             } catch (IOException ex) {
                 System.err.println("File not found. secretBlockLongeur = 4");
                 this.secretBlockLongeur = 4;
+                return this;
+            }
+        }
+
+        public GameBuilder setnmbrUtilisable(final Path propertiesPath) {
+            try (InputStream input = new FileInputStream(propertiesPath.toFile())) {
+                Properties properties = new Properties();
+                properties.load(input);
+                int nmbrFromFile = new Integer(properties.getProperty("nmbrUtilisable"));
+                if (nmbrFromFile < 4) {
+                    this.nmbrUtilisable = 4;
+                } else if (nmbrFromFile >= 10) {
+                    this.nmbrUtilisable = 10;
+                } else {
+                    this.nmbrUtilisable = nmbrFromFile;
+                }
+                return this;
+            } catch (IOException ex) {
+                System.err.println("File not found. nmbrUtilisable = 4");
+                this.nmbrUtilisable = 4;
                 return this;
             }
         }
