@@ -2,6 +2,8 @@ package fr.kacetal.mastermind.controller;
 
 import fr.kacetal.mastermind.model.Game;
 import fr.kacetal.mastermind.model.SecretBlock;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -16,6 +18,8 @@ import static java.lang.Math.pow;
  */
 public class MastermindComparator extends ArraysComparator {
 
+    public static final Logger LOGGER = LogManager.getLogger(MastermindComparator.class.getName());
+
     protected final int[] responseToWin;
 
     protected List<SecretBlock> listOfAllValues;
@@ -23,6 +27,7 @@ public class MastermindComparator extends ArraysComparator {
     public MastermindComparator(Game game) {
         super(game);
         responseToWin = new int[]{game.getSecretBlockLongeur(), 0};
+        LOGGER.info("Response to win is " + Arrays.toString(this.responseToWin));
     }
 
     protected List<SecretBlock> getListOfAllValues(final int longeur, final int limMax) {
@@ -42,6 +47,8 @@ public class MastermindComparator extends ArraysComparator {
             }
             listOfValues.add(new SecretBlock(arrBuffer));
         }
+
+        LOGGER.debug("Size listOfAllValues is " + listOfValues.size());
 
         return listOfValues;
     }

@@ -6,6 +6,8 @@ import fr.kacetal.mastermind.model.SecretBlock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Arrays;
+
 public class MastermindChallengerFunction extends MastermindComparator {
 
     public static final Logger LOGGER = LogManager.getLogger(MastermindChallengerFunction.class.getName());
@@ -19,21 +21,28 @@ public class MastermindChallengerFunction extends MastermindComparator {
 
     @Override
     public void play() {
+        LOGGER.info("Entering in the method play()");
         nbrOfTry = game.getTryNumber();
 
         secretBlock = new SecretBlock(game, game.getGameType());
         secretArray = secretBlock.getArrOfNbr();
 
-        System.out.println("Devinez un nombre qui contient " + game.getSecretBlockLongeur() + " chiffres.");
-        System.out.println("Les chiffres sont disponibles de 0 à " + (game.getNmbrUtilisable() - 1));
+        LOGGER.info("Secret Block is " + Arrays.toString(secretArray));
+
+        System.out.printf("Devinez un nombre qui contient %d chiffres.%n", game.getSecretBlockLongeur());
+        System.out.printf("Les chiffres sont disponibles de 0 à %d%n", (game.getNmbrUtilisable() - 1));
 
         while (true) {
-            System.out.print("Il y a encore " + nbrOfTry);
+            LOGGER.info("Il y a encore {}", nbrOfTry);
+
+            System.out.printf("Il y a encore %d", nbrOfTry);
             System.out.println(gamePlayDialog.nbrOfTryDlg(nbrOfTry--));
 
             System.out.print("Donnez un nombre:");
 
             responseArray = (responseBlock = getPlayerResponse()).getArrOfNbr();
+
+            LOGGER.info("player response is " + Arrays.toString(responseArray));
 
             System.out.println("Votre reponse: |" + responseBlock + "|");
 
@@ -44,18 +53,25 @@ public class MastermindChallengerFunction extends MastermindComparator {
             arrDiff = arrCompare(secretArray, responseArray);
             astuce = intArrToStrNormalizer(arrDiff);
 
+            LOGGER.info(astuce);
+
             System.out.println(astuce);
 
             if (isWinner(arrDiff)) {
                 System.out.println("Félicitation! Vous avez gagné!");
                 System.out.println("Il y a encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
+                LOGGER.info("Félicitation! Vous avez gagné!");
+                LOGGER.info("Il y a encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
                 break;
             } else if (nbrOfTry <= 0) {
                 System.out.println("Mauvaise reponse.\nVous n'avez plus d'essai.\nPerdu!");
+                System.out.println("Vraie reponse: |" + secretBlock + "|");
+                LOGGER.info("Mauvaise reponse. Vous n'avez plus d'essai. Perdu!");
                 break;
             }
 
             System.out.println("Mauvaise reponse.\n");
+            LOGGER.info("Mauvaise reponse.");
             pause(1000);
         }
     }
