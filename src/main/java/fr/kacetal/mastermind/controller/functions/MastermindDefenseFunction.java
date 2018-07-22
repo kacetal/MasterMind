@@ -38,8 +38,6 @@ public class MastermindDefenseFunction extends MastermindComparator {
 
         responseBlock = new SecretBlock(responseArray);
 
-        int randomPosition;
-
         int nbrActuel = listOfAllValues.size();
 
         int nbrEliminated;
@@ -77,49 +75,19 @@ public class MastermindDefenseFunction extends MastermindComparator {
 
                 System.out.println("Mauvaise reponse.\n");
                 listEliminator(listOfAllValues, responseArray, arrDiffAI);
-                randomPosition = (int) (Math.random() * listOfAllValues.size());
-                responseBlock = listOfAllValues.get(randomPosition);
+                responseBlock = listOfAllValues.get(listOfAllValues.size() / 2);
                 responseArray = responseBlock.getArrOfNbr();
                 pause(1500);
-                System.out.println("AI eliminet les valeurs inconvenables\n");
+                System.out.println("AI élimine les valeurs inconvenables\n");
                 pause(1500);
                 if (game.isDevMode()) {
                     nbrEliminated = nbrActuel - listOfAllValues.size();
                     nbrActuel = listOfAllValues.size();
-                    System.out.printf("%8d valeurs eliminées%n", nbrEliminated);
+                    System.out.printf("%8d valeurs éliminées%n", nbrEliminated);
                     System.out.printf("%8d valeurs dans la list%n%n", nbrActuel);
                     pause(3000);
                 }
             }
         }
-
-
     }
-
-    void listEliminator(final List<SecretBlock> listOfAllValues, final int[] responseArray, final int[] arrDiffAIMasque) {
-
-        int[] arrToCompare;
-
-        SecretBlock responseBlock = new SecretBlock(responseArray);
-
-        for (int i = 0; i < listOfAllValues.size(); i++) {
-            // Remove the same Block from List
-            if (listOfAllValues.get(i).equals(responseBlock)) {
-                listOfAllValues.remove(i);
-                i--;
-                continue;
-            }
-
-            //We compare each Block from list with response for get the new Masque
-            arrToCompare = arrCompare(listOfAllValues.get(i).getArrOfNbr(), responseArray);
-
-            //Remove the Block which have different masque
-            if (!Arrays.equals(arrToCompare, arrDiffAIMasque)) {
-                listOfAllValues.remove(i);
-                i--;
-            }
-        }
-    }
-
-
 }

@@ -96,17 +96,20 @@ public class RechercheDuelFunction extends RechercheComparator {
                 System.out.println("Nombre caché est:|" + secretBlock + "|");
                 break;
             } else if (isWinner(astucePlayer)) {
-                System.out.println("Félicitation! Vous avez gagné! AI a été supprimé!");
+                System.out.println("Félicitation! Vous avez gagné!");
                 System.out.println("Il y a encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
+                System.out.println("Nombre caché est:|" + secretBlock + "|");
                 break;
             } else if (isWinner(astuceAI)) {
                 System.out.println("Perdu! AI a gagné!");
                 System.out.println("Il y a encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
+                System.out.println("Nombre caché est:|" + secretBlock + "|");
                 break;
             } else if (nbrOfTry <= 0) {
                 System.out.println("Il n'y a plus d'essai!");
                 System.out.println("Vous et AI êtes perdu!");
-
+                System.out.println("Nombre caché est:|" + secretBlock + "|");
+                break;
             }
             System.out.println("Mauvaise reponse.\n");
             pause(1000);

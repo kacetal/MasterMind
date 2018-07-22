@@ -19,7 +19,7 @@ public class RechercheComparatorTest {
     private Game game = builder.setDevMode(true)
             .setGameType(GameType.RECHERCHE)
             .setGameMode(GameMode.CHALLENGER)
-            .setSecretBlockLongeur(Paths.get(""))
+            .setSecretBlockLength(Paths.get(""))
             .setTryNumber(Paths.get(""))
             .buildGame();
 

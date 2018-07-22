@@ -1,10 +1,20 @@
 package fr.kacetal.mastermind.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ * @author Artem
+ *
+ * Class wrapper for store an array of numbers.
+ */
 public class SecretBlock {
+
+    public static final Logger LOGGER = LogManager.getLogger(SecretBlock.class.getName());
 
     private final int secretBlockLongeur;
 
@@ -15,12 +25,12 @@ public class SecretBlock {
         this.arrOfNbr = new Random().ints(this.secretBlockLongeur, 0, 10).toArray();
     }
 
-    public SecretBlock(final int[] arrOfNbr) {
+    public SecretBlock( final int[] arrOfNbr) {
         this.secretBlockLongeur = arrOfNbr.length;
         this.arrOfNbr = arrOfNbr.clone();
     }
 
-    public SecretBlock(final Game game) {
+    public SecretBlock( final Game game) {
         this.secretBlockLongeur = game.getSecretBlockLongeur();
         this.arrOfNbr = new Random().ints(this.secretBlockLongeur, 0, 10).toArray();
     }
@@ -34,45 +44,8 @@ public class SecretBlock {
         this.arrOfNbr = new Random().ints(this.secretBlockLongeur, 0, 10).toArray();
     }
 
-//    public SecretBlock(final int nbrToArr, final Game game) {
-//        this.secretBlockLongeur = game.getSecretBlockLongeur();
-//        this.arrOfNbr = String.valueOf(nbrToArr).chars().map(Character::getNumericValue).toArray();
-//    }
-//
-//    public SecretBlock(final String strToNbrArr, final Game game) {
-//        this.secretBlockLongeur = game.getSecretBlockLongeur();
-//        this.arrOfNbr = strToNbrArr.chars().map(Character::getNumericValue).toArray();
-//    }
-
     public int[] getArrOfNbr() {
         return arrOfNbr;
-    }
-
-    public int getNbrAt(final int position) {
-
-        if (position <= 0) {
-            return arrOfNbr[0];
-        } else if (position >= secretBlockLongeur) {
-            return arrOfNbr[secretBlockLongeur - 1];
-        }
-
-        return arrOfNbr[position];
-    }
-
-    public boolean isNbrExist(int number) {
-
-        if (number < 0) {
-            number = 0;
-        } else if (number > 9) {
-            number = 9;
-        }
-
-        for (int anArrOfNbr : arrOfNbr) {
-            if (number == anArrOfNbr) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /*

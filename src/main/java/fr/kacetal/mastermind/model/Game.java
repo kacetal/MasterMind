@@ -1,5 +1,8 @@
 package fr.kacetal.mastermind.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +15,8 @@ import java.util.Properties;
  */
 public class Game {
 
-    //Mode développeur où la solution est affichée dès le début
+    public static final Logger LOGGER = LogManager.getLogger(Game.class.getName());
+
     private final boolean isDevMode;
 
     private final int tryNumber;
@@ -25,10 +29,10 @@ public class Game {
 
     private final GameMode gameMode;
 
-    private Game(final GameBuilder builder) {
+    private Game(final Game.GameBuilder builder) {
         this.isDevMode = builder.isDevMode;
         this.tryNumber = builder.tryNumber;
-        this.secretBlockLongeur = builder.secretBlockLongeur;
+        this.secretBlockLongeur = builder.secretBlockLength;
         this.nmbrUtilisable = builder.nmbrUtilisable;
         this.gameType = builder.gameType;
         this.gameMode = builder.gameMode;
@@ -49,7 +53,7 @@ public class Game {
     }
 
     /**
-     * @return the secretBlockLongeur
+     * @return the secretBlockLength
      */
     public int getSecretBlockLongeur() {
         return secretBlockLongeur;
@@ -123,7 +127,7 @@ public class Game {
      */
     @Override
     public String toString() {
-        return "Game [isDevMode=" + isDevMode + ", tryNumber=" + tryNumber + ", secretBlockLongeur="
+        return "Game [isDevMode=" + isDevMode + ", tryNumber=" + tryNumber + ", secretBlockLength="
                 + secretBlockLongeur + ", gameType=" + gameType + ", gameMode=" + gameMode + "]";
     }
 
@@ -133,7 +137,7 @@ public class Game {
 
         private int tryNumber;
 
-        private int secretBlockLongeur;
+        private int secretBlockLength;
 
         private int nmbrUtilisable;
 
@@ -146,6 +150,7 @@ public class Game {
          */
         public GameBuilder setDevMode(boolean isDevMode) {
             this.isDevMode = isDevMode;
+            Game.LOGGER.info("Developer mode is selected: " + isDevMode);
             return this;
         }
 
@@ -157,46 +162,55 @@ public class Game {
                 Properties properties = new Properties();
                 properties.load(input);
                 this.tryNumber = new Integer(properties.getProperty("tryNumber"));
+                Game.LOGGER.info("Number of try is " + tryNumber);
                 return this;
             } catch (IOException ex) {
-                System.err.println("File not found. tryNumber = 8");
+                Game.LOGGER.error("IOException " + ex.getMessage());
                 this.tryNumber = 8;
+                Game.LOGGER.error("File config.properties not found. tryNumber = " + tryNumber + " par default");
                 return this;
             }
         }
 
         /**
-         * @param propertiesPath the secretBlockLongeur to set
+         * @param propertiesPath the secretBlockLength to set
          */
-        public GameBuilder setSecretBlockLongeur(final Path propertiesPath) {
+        public GameBuilder setSecretBlockLength(final Path propertiesPath) {
             try (InputStream input = new FileInputStream(propertiesPath.toFile())){
                 Properties properties = new Properties();
                 properties.load(input);
-                this.secretBlockLongeur = new Integer(properties.getProperty("secretBlockLongeur"));
+                this.secretBlockLength = new Integer(properties.getProperty("secretBlockLongeur"));
+                Game.LOGGER.info("Length of SecretBlock is " + secretBlockLength);
                 return this;
             } catch (IOException ex) {
-                System.err.println("File not found. secretBlockLongeur = 4");
-                this.secretBlockLongeur = 4;
+                Game.LOGGER.error("IOException " + ex.getMessage());
+                this.secretBlockLength = 4;
+                Game.LOGGER.error("File config.properties not found. secretBlockLength = " + secretBlockLength + " par default");
                 return this;
             }
         }
 
-        public GameBuilder setnmbrUtilisable(final Path propertiesPath) {
+        public GameBuilder setNmbrUtilisable(final Path propertiesPath) {
             try (InputStream input = new FileInputStream(propertiesPath.toFile())) {
                 Properties properties = new Properties();
                 properties.load(input);
                 int nmbrFromFile = new Integer(properties.getProperty("nmbrUtilisable"));
+                Game.LOGGER.info("Numbers of figures are [0 - " + nmbrFromFile + ")");
                 if (nmbrFromFile < 4) {
+                    Game.LOGGER.warn("Numbers of figures minimum is 4. nmbrUtilisable = 4");
                     this.nmbrUtilisable = 4;
                 } else if (nmbrFromFile >= 10) {
+                    Game.LOGGER.warn("Numbres of figures maximum is 10. nmbrUtilisable = 10");
                     this.nmbrUtilisable = 10;
                 } else {
+                    Game.LOGGER.info("Numbres of figures is " + nmbrFromFile);
                     this.nmbrUtilisable = nmbrFromFile;
                 }
                 return this;
             } catch (IOException ex) {
-                System.err.println("File not found. nmbrUtilisable = 4");
+                Game.LOGGER.error("IOException " + ex.getMessage());
                 this.nmbrUtilisable = 4;
+                Game.LOGGER.error("File config.properties not found. nmbrUtilisable = " + nmbrUtilisable + " par default");
                 return this;
             }
         }
@@ -206,6 +220,7 @@ public class Game {
          */
         public GameBuilder setGameType(GameType gameType) {
             this.gameType = gameType;
+            Game.LOGGER.info("Game type is " + gameType.getName());
             return this;
         }
 
@@ -214,10 +229,12 @@ public class Game {
          */
         public GameBuilder setGameMode(GameMode gameMode) {
             this.gameMode = gameMode;
+            Game.LOGGER.info("Game mode is " + gameMode.getName());
             return this;
         }
 
         public Game buildGame() {
+            Game.LOGGER.info(new Game(this).toString());
             return new Game(this);
         }
     }

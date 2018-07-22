@@ -3,8 +3,12 @@ package fr.kacetal.mastermind.controller.functions;
 import fr.kacetal.mastermind.controller.MastermindComparator;
 import fr.kacetal.mastermind.model.Game;
 import fr.kacetal.mastermind.model.SecretBlock;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MastermindChallengerFunction extends MastermindComparator {
+
+    public static final Logger LOGGER = LogManager.getLogger(MastermindChallengerFunction.class.getName());
 
     private int[] arrDiff;
 
@@ -54,9 +58,5 @@ public class MastermindChallengerFunction extends MastermindComparator {
             System.out.println("Mauvaise reponse.\n");
             pause(1000);
         }
-    }
-
-    private boolean isWinner(final int[] arrDiff) {
-        return arrDiff[0] == responseToWin[0];
     }
 }

@@ -44,15 +44,6 @@ public class MastermindComparator extends ArraysComparator {
         }
 
         return listOfValues;
-
-        /*
-        long[][] array = LongStream
-                .range(0, Math.round(Math.pow(limMax, longeur)))
-                .mapToObj(i -> Long.toString(i, limMax))
-                .map(s -> Stream.generate(() -> "0").limit(longeur - s.length()).collect(Collectors.joining()) + s)
-                .map(s -> s.chars().mapToLong(l -> Long.parseLong(String.valueOf((char) l), limMax)).toArray())
-                .toArray(long[][]::new);
-         */
     }
 
     @Override
@@ -95,5 +86,9 @@ public class MastermindComparator extends ArraysComparator {
     @Override
     protected String intArrToStrNormalizer(final int[] arrayToNormalize) {
         return String.format("%d bien placés, %d présents.%n", arrayToNormalize[0], arrayToNormalize[1]);
+    }
+
+    protected boolean isWinner(final int[] arrToWin) {
+        return Arrays.equals(arrToWin, responseToWin);
     }
 }
