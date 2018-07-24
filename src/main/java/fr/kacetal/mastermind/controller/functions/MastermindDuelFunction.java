@@ -4,7 +4,6 @@ import fr.kacetal.mastermind.controller.MastermindComparator;
 import fr.kacetal.mastermind.model.Game;
 import fr.kacetal.mastermind.model.SecretBlock;
 
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class MastermindDuelFunction extends MastermindComparator {
@@ -71,14 +70,14 @@ public class MastermindDuelFunction extends MastermindComparator {
             responsePlayerArray = (responsePlayerBlock = getPlayerResponse()).getArrOfNbr();
             System.out.println("Votre reponse: |" + responsePlayerBlock + "|");
 
-            //get array with astuce for player
+            //get array with hint for player
             arrDiffPlayer = arrCompare(secretArray, responsePlayerArray);
-            //get String with astuce for player
+            //get String with hint for player
             astucePlayer = intArrToStrNormalizer(arrDiffPlayer);
 
-            //get array with astuce for AI
+            //get array with hint for AI
             arrDiffAI = arrCompare(secretArray, responseAIArray);
-            //get String with astuce for AI
+            //get String with hint for AI
             astuceAI = intArrToStrNormalizer(arrDiffAI);
 
             System.out.print("AI calcule...: |");

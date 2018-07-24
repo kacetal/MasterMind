@@ -1,6 +1,8 @@
 package fr.kacetal.mastermind.controller;
 
 import fr.kacetal.mastermind.model.Game;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -10,6 +12,8 @@ import java.util.stream.Stream;
  * @author artem
  */
 public class RechercheComparator extends ArraysComparator {
+
+    public static final Logger LOGGER = LogManager.getLogger(RechercheComparator.class.getName());
 
     protected final String responseToWin;
 
@@ -24,6 +28,7 @@ public class RechercheComparator extends ArraysComparator {
                 .limit(game.getSecretBlockLongeur())
                 .collect(Collectors.joining());
 
+        LOGGER.info("Response to win is {}", responseToWin);
     }
 
     @Override

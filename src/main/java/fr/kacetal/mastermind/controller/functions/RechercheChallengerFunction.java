@@ -47,21 +47,21 @@ public class RechercheChallengerFunction extends RechercheComparator {
                 System.out.println("Vraie reponse: |" + secretBlock + "|");
             }
 
-            astuce = getAstuce();
+            hint = getAstuce();
 
-            LOGGER.info(astuce);
-
-            pause(1000);
-            System.out.println("Astuce cachée: |" + astuce + "|");
+            LOGGER.info(hint);
 
             pause(1000);
+            System.out.println("Astuce cachée: |" + hint + "|");
 
-            if (!isWinner(astuce) && nbrOfTry <= 0) {
+            pause(1000);
+
+            if (!isWinner(hint) && nbrOfTry <= 0) {
                 System.out.println("Mauvaise reponse.\nVous n'avez plus d'essai.\nPerdu!");
                 System.out.println("Vraie reponse: |" + secretBlock + "|");
                 LOGGER.info("Mauvaise reponse. Vous n'avez plus d'essai. Perdu!");
                 break;
-            } else if (isWinner(astuce)) {
+            } else if (isWinner(hint)) {
                 System.out.println("Félicitation! Vous avez gagné!");
                 System.out.println("Il y a encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
                 LOGGER.info("Félicitation! Vous avez gagné!");

@@ -33,7 +33,7 @@ public class ArraysComparator {
 
     protected int nbrOfTry;
 
-    protected String astuce;
+    protected String hint;
 
     ArraysComparator(Game game) {
         this.game = game;

@@ -68,7 +68,7 @@ public class RechercheDefenseFunction extends RechercheComparator {
             System.out.println(gamePlayDialog.nbrOfTryDlg(nbrOfTry--));
 
             arrDiffAI = arrCompare(secretArray, responseArray);
-            astuce = intArrToStrNormalizer(arrDiffAI);
+            hint = intArrToStrNormalizer(arrDiffAI);
 
             System.out.println();
 
@@ -82,18 +82,18 @@ public class RechercheDefenseFunction extends RechercheComparator {
 
             System.out.println("AI essaye avec: |" + responseBlock + "|");
             System.out.println("Nmbr caché est: |" + secretBlock + "|");
-            System.out.println("Astuce pour AI: |" + astuce + "|\n");
+            System.out.println("Astuce pour AI: |" + hint + "|\n");
 
-            if (!astuce.equals(responseToWin) && nbrOfTry <= 0) {
+            if (!hint.equals(responseToWin) && nbrOfTry <= 0) {
                 System.out.println("Mauvaise reponse.\nAI n'a plus d'essai.\nFélicitation!");
                 break;
-            } else if (!astuce.equals(responseToWin)) {
+            } else if (!hint.equals(responseToWin)) {
                 System.out.println("Mauvaise reponse.\n");
                 responseLimitsAnalyze(minAILimit, maxAILimit, responseArray, arrDiffAI, game.getSecretBlockLongeur());
                 System.out.print("Nombre calculé: |");
                 responseAIGenerator(minAILimit, maxAILimit, responseArray, game.getSecretBlockLongeur());
                 responseBlock = new SecretBlock(responseArray);
-            } else if (astuce.equals(responseToWin)) {
+            } else if (hint.equals(responseToWin)) {
                 System.out.println("Perdu! AI a gagné!");
                 System.out.println("Il le reste encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
                 break;

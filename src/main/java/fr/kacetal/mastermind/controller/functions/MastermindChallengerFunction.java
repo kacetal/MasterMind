@@ -51,11 +51,11 @@ public class MastermindChallengerFunction extends MastermindComparator {
             }
 
             arrDiff = arrCompare(secretArray, responseArray);
-            astuce = intArrToStrNormalizer(arrDiff);
+            hint = intArrToStrNormalizer(arrDiff);
 
-            LOGGER.info(astuce);
+            LOGGER.info(hint);
 
-            System.out.println(astuce);
+            System.out.println(hint);
 
             if (isWinner(arrDiff)) {
                 System.out.println("Félicitation! Vous avez gagné!");
