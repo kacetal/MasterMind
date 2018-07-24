@@ -3,6 +3,8 @@ package fr.kacetal.mastermind.controller.functions;
 import fr.kacetal.mastermind.controller.RechercheComparator;
 import fr.kacetal.mastermind.model.Game;
 import fr.kacetal.mastermind.model.SecretBlock;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -10,6 +12,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class RechercheDefenseFunction extends RechercheComparator {
+
+    public static final Logger LOGGER = LogManager.getLogger(RechercheDefenseFunction.class.getName());
 
     private SecretBlock secretBlock;
 
@@ -19,7 +23,8 @@ public class RechercheDefenseFunction extends RechercheComparator {
         super(game);
     }
 
-    static void responseLimitsAnalyze(int[] min, int[] max, int[] responseArray, int[] arrDiff, int longeur) {
+    static void responseLimitsReduce(int[] min, int[] max, int[] responseArray, int[] arrDiff, int longeur) {
+        LOGGER.info("Entering in the method responseLimitsReduce()");
         for (int i = 0; i < longeur; i++) {
             if (arrDiff[i] < 0) {
                 max[i] = responseArray[i];
@@ -33,6 +38,7 @@ public class RechercheDefenseFunction extends RechercheComparator {
     }
 
     private static void responseAIGenerator(int[] min, int[] max, int[] responseArray, int longeur) {
+        LOGGER.debug("Entering in the method responseAIGenerator()");
         for (int i = 0; i < longeur; i++) {
             pause(1000);
             if (min[i] == max[i]) {
@@ -48,6 +54,7 @@ public class RechercheDefenseFunction extends RechercheComparator {
 
     @Override
     public void play() {
+        LOGGER.info("Entering in the method play()");
         nbrOfTry = game.getTryNumber();
 
         String limMIN, limMAX;
@@ -55,6 +62,7 @@ public class RechercheDefenseFunction extends RechercheComparator {
         System.out.println("Faire un nombre de " + game.getSecretBlockLongeur() + " chiffres");
 
         secretArray = (secretBlock = getPlayerResponse()).getArrOfNbr();
+        LOGGER.info("Secret block is {}", secretBlock.toString());
 
         minAILimit = IntStream.generate(() -> 0).limit(game.getSecretBlockLongeur()).toArray();
         maxAILimit = IntStream.generate(() -> 9).limit(game.getSecretBlockLongeur()).toArray();
@@ -79,23 +87,32 @@ public class RechercheDefenseFunction extends RechercheComparator {
                 System.out.println("Limite min est: |" + limMIN + "|");
             }
 
-
             System.out.println("AI essaye avec: |" + responseBlock + "|");
             System.out.println("Nmbr caché est: |" + secretBlock + "|");
             System.out.println("Astuce pour AI: |" + hint + "|\n");
 
+            LOGGER.info("Response from IA is {}", responseBlock.toString());
+            LOGGER.info("Hint for AI is {}", hint);
+
+            LOGGER.debug("Limit max is {}", Arrays.toString(maxAILimit));
+            LOGGER.debug("Limit min is {}", Arrays.toString(minAILimit));
+
             if (!hint.equals(responseToWin) && nbrOfTry <= 0) {
                 System.out.println("Mauvaise reponse.\nAI n'a plus d'essai.\nFélicitation!");
+                LOGGER.info("AI lost");
+                LOGGER.info("There are {} number of try", nbrOfTry);
                 break;
             } else if (!hint.equals(responseToWin)) {
                 System.out.println("Mauvaise reponse.\n");
-                responseLimitsAnalyze(minAILimit, maxAILimit, responseArray, arrDiffAI, game.getSecretBlockLongeur());
+                responseLimitsReduce(minAILimit, maxAILimit, responseArray, arrDiffAI, game.getSecretBlockLongeur());
                 System.out.print("Nombre calculé: |");
                 responseAIGenerator(minAILimit, maxAILimit, responseArray, game.getSecretBlockLongeur());
                 responseBlock = new SecretBlock(responseArray);
             } else if (hint.equals(responseToWin)) {
                 System.out.println("Perdu! AI a gagné!");
                 System.out.println("Il le reste encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
+                LOGGER.info("Player lost. AI win");
+                LOGGER.info("There are {} number of try", nbrOfTry);
                 break;
             }
         } while (true);
