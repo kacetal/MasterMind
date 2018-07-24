@@ -95,13 +95,16 @@ public class MastermindDefenseFunction extends MastermindComparator {
                 pause(1500);
                 System.out.println("AI élimine les valeurs inconvenables\n");
                 pause(1500);
+                nbrEliminated = nbrActuel - listOfAllValues.size();
+                nbrActuel = listOfAllValues.size();
                 if (game.isDevMode()) {
-                    nbrEliminated = nbrActuel - listOfAllValues.size();
-                    nbrActuel = listOfAllValues.size();
                     System.out.printf("%8d valeurs éliminées%n", nbrEliminated);
                     System.out.printf("%8d valeurs dans la list%n%n", nbrActuel);
                     pause(3000);
                 }
+
+                LOGGER.debug(nbrEliminated + "{ numbers was deleted");
+                LOGGER.debug(nbrActuel + "");
             }
         }
     }
