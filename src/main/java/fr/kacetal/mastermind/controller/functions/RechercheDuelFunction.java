@@ -25,9 +25,9 @@ public class RechercheDuelFunction extends RechercheComparator {
 
     private int[] responseAIArray;
 
-    private String astucePlayer;
+    private String hintForPlayer;
 
-    private String astuceAI;
+    private String hintForAI;
 
     public RechercheDuelFunction(Game game) {
         super(game);
@@ -60,9 +60,9 @@ public class RechercheDuelFunction extends RechercheComparator {
             responsePlayerArray = (responsePlayerBlock = getPlayerResponse()).getArrOfNbr();
 
             System.out.println("Votre reponse:   |" + responsePlayerBlock + "|");
-            astucePlayer = parseStringFromArray(arrCompare(secretArray, responsePlayerArray));
+            hintForPlayer = parseStringFromArray(arrCompare(secretArray, responsePlayerArray));
             pause(1000);
-            System.out.println("Votre astuce est:|" + astucePlayer + "|");
+            System.out.println("Votre astuce est:|" + hintForPlayer + "|");
             pause(1000);
 
             if (firstLoop) {
@@ -75,15 +75,15 @@ public class RechercheDuelFunction extends RechercheComparator {
                 }
                 System.out.println("|");
                 arrDiffAI = arrCompare(secretArray, responseAIArray);
-                astuceAI = parseStringFromArray(arrDiffAI);
-                System.out.println("Astuce pour AI:  |" + astuceAI + "|");
+                hintForAI = parseStringFromArray(arrDiffAI);
+                System.out.println("Astuce pour AI:  |" + hintForAI + "|");
                 firstLoop = false;
             } else {
                 System.out.print("AI recalcule...: |");
                 responseAIGenerator(minAILimit, maxAILimit, responseAIArray, game.getSecretBlockLength());
                 arrDiffAI = arrCompare(secretArray, responseAIArray);
-                astuceAI = parseStringFromArray(arrDiffAI);
-                System.out.println("Astuce pour AI:  |" + astuceAI + "|");
+                hintForAI = parseStringFromArray(arrDiffAI);
+                System.out.println("Astuce pour AI:  |" + hintForAI + "|");
             }
 
             LOGGER.info("Response of the player is {}", responsePlayerBlock.toString());
@@ -105,20 +105,20 @@ public class RechercheDuelFunction extends RechercheComparator {
 
             pause(2000);
 
-            if (astucePlayer.equals(astuceAI) && isWinner(astucePlayer)) {
+            if (hintForPlayer.equals(hintForAI) && isWinner(hintForPlayer)) {
                 System.out.println("La partie NULL!");
                 System.out.println("Nombre caché est:|" + secretBlock + "|");
                 LOGGER.info("Tae game");
                 LOGGER.info("Secret block is {}", secretBlock.toString());
                 break;
-            } else if (isWinner(astucePlayer)) {
+            } else if (isWinner(hintForPlayer)) {
                 System.out.println("Félicitation! Vous avez gagné!");
                 System.out.println("Il y a encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
                 System.out.println("Nombre caché est:|" + secretBlock + "|");
                 LOGGER.info("Player win. AI lost");
                 LOGGER.info("There are {} number of try", nbrOfTry);
                 break;
-            } else if (isWinner(astuceAI)) {
+            } else if (isWinner(hintForAI)) {
                 System.out.println("Perdu! AI a gagné!");
                 System.out.println("Il y a encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
                 System.out.println("Nombre caché est:|" + secretBlock + "|");
@@ -135,7 +135,7 @@ public class RechercheDuelFunction extends RechercheComparator {
             }
             System.out.println("Mauvaise reponse.\n");
             pause(1000);
-            responseLimitsReduce(minAILimit, maxAILimit, responseAIArray, arrDiffAI, game.getSecretBlockLongeur());
+            responseLimitsReduce(minAILimit, maxAILimit, responseAIArray, arrDiffAI, game.getSecretBlockLength());
         } while (true);
     }
 

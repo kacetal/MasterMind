@@ -22,9 +22,9 @@ public class MastermindDuelFunction extends MastermindComparator {
 
     private int[] responseAIArray;
 
-    private String astucePlayer;
+    private String hintForPlayer;
 
-    private String astuceAI;
+    private String hintForAI;
 
     public MastermindDuelFunction(Game game) {
         super(game);
@@ -35,7 +35,7 @@ public class MastermindDuelFunction extends MastermindComparator {
         LOGGER.info("Entering in the method play()");
 
         //create list of all values possible
-        listOfAllValues = getListOfAllValues(game.getSecretBlockLongeur(), game.getNmbrUtilisable());
+        listOfAllValues = getListOfAllValues(game.getSecretBlockLength(), game.getNmbrUtilisable());
         LOGGER.info("The size of the list of all values is {}", listOfAllValues.size());
         //Refresh number of try for new game
         nbrOfTry = game.getTryNumber();
@@ -80,12 +80,12 @@ public class MastermindDuelFunction extends MastermindComparator {
             //get array with hint for player
             arrDiffPlayer = arrCompare(secretArray, responsePlayerArray);
             //get String with hint for player
-            astucePlayer = parseStringFromArray(arrDiffPlayer);
+            hintForPlayer = parseStringFromArray(arrDiffPlayer);
 
             //get array with hint for AI
             arrDiffAI = arrCompare(secretArray, responseAIArray);
             //get String with hint for AI
-            astuceAI = parseStringFromArray(arrDiffAI);
+            hintForAI = parseStringFromArray(arrDiffAI);
 
             LOGGER.info("Response of the player is {}", responsePlayerBlock.toString());
             LOGGER.info("Hint for Player is {}", hintForPlayer);
@@ -100,9 +100,9 @@ public class MastermindDuelFunction extends MastermindComparator {
             System.out.println("|\n");
 
             pause(1000);
-            System.out.println("Astuce pour vous : " + astucePlayer);
+            System.out.println("Astuce pour vous : " + hintForPlayer);
             pause(1000);
-            System.out.println("Astuce pour AI   : " + astuceAI);
+            System.out.println("Astuce pour AI   : " + hintForAI);
             pause(1000);
 
             if (game.isDevMode()) {
