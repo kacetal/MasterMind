@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 import static java.lang.Math.pow;
 
 /**
- * @author artem
+ * Class with the methods for the game Mastermind
+ * @author Artem
  * @see ArraysComparator
  */
 public class MastermindComparator extends ArraysComparator {
@@ -26,25 +27,35 @@ public class MastermindComparator extends ArraysComparator {
 
     public MastermindComparator(Game game) {
         super(game);
-        responseToWin = new int[]{game.getSecretBlockLongeur(), 0};
+        responseToWin = new int[]{game.getSecretBlockLength(), 0};
         LOGGER.info("Response to win is " + Arrays.toString(this.responseToWin));
     }
 
-    protected List<SecretBlock> getListOfAllValues(final int longeur, final int limMax) {
+    /**
+     * Creation the list of all the possible values
+     *
+     * @param lengthOfNumber
+     * @param figureMaximal
+     * @return
+     */
+    protected List<SecretBlock> getListOfAllValues(final int lengthOfNumber, final int figureMaximal) {
 
         List<SecretBlock> listOfValues = new LinkedList<>();
 
-        int limOfValue = (int) pow(limMax, longeur);
+        int numberOfValues = (int) pow(figureMaximal, lengthOfNumber);
 
-        int[] arrBuffer = new int[longeur];
+        int[] arrBuffer = new int[lengthOfNumber];
 
-        for (int i = 0, t; i < limOfValue; i++) {
+        for (int i = 0, t; i < numberOfValues; i++) {
 
             t = i;
-            for (int j = longeur - 1; j >= 0; j--) {
-                arrBuffer[j] = t % limMax;
-                t /= limMax;
+
+            //Creation an array contains the figures [0, figureMaximal)
+            for (int j = lengthOfNumber - 1; j >= 0; j--) {
+                arrBuffer[j] = t % figureMaximal;
+                t /= figureMaximal;
             }
+
             listOfValues.add(new SecretBlock(arrBuffer));
         }
 
@@ -53,6 +64,15 @@ public class MastermindComparator extends ArraysComparator {
         return listOfValues;
     }
 
+    /**
+     * Method compares two arrays and<p>
+     * returns an array contains two int {goodPlace, present}
+     *
+     * @param secretArray
+     * @param responseArray
+     * @return an array contains two int {goodPlace, present}
+     * @see {@link ArraysComparator#arrCompare(int[], int[])}
+     */
     @Override
     protected int[] arrCompare(final int[] secretArray, final int[] responseArray) {
 
@@ -62,25 +82,33 @@ public class MastermindComparator extends ArraysComparator {
         int goodPlace = 0;
         int present = 0;
 
+        //Eliminates all the same figures are at the same positions
         for (int i = 0; i < secretList.size(); ) {
             if (secretList.get(i).equals(responseList.get(i))) {
+
                 goodPlace++;
+
                 secretList.remove(i);
                 responseList.remove(i);
                 i = 0;
+
                 continue;
             }
             i++;
         }
 
+        //Eliminates all the same figures aren't the same positions
         out:
         for (int i = 0; i < secretList.size(); ) {
             for (int j = 0; j < responseList.size(); j++) {
                 if (secretList.get(i).equals(responseList.get(j))) {
-                    present++;
+
                     secretList.remove(i);
                     responseList.remove(j);
                     i = 0;
+
+                    present++;
+
                     continue out;
                 }
             }
@@ -90,12 +118,24 @@ public class MastermindComparator extends ArraysComparator {
         return new int[]{goodPlace, present};
     }
 
+    /**
+     * Method parses an Array as the String {@code "x bien placés, y présents."}
+     *
+     * @param arrToParse an {@code array} containing the {@code int} to parse
+     * @return the String parsed from an array
+     */
     @Override
-    protected String intArrToStrNormalizer(final int[] arrayToNormalize) {
-        return String.format("%d bien placés, %d présents.%n", arrayToNormalize[0], arrayToNormalize[1]);
+    protected String parseStringFromArray(final int[] arrToParse) {
+        return String.format("%d bien placés, %d présents.%n", arrToParse[0], arrToParse[1]);
     }
 
-    protected boolean isWinner(final int[] arrToWin) {
-        return Arrays.equals(arrToWin, responseToWin);
+    /**
+     * Method compare an array with {@link MastermindComparator#responseToWin}
+     *
+     * @param arrayToCompare an array to compare with {@link MastermindComparator#responseToWin}
+     * @return true if an array equals to {@link MastermindComparator#responseToWin}
+     */
+    protected boolean isWinner(final int[] arrayToCompare) {
+        return Arrays.equals(arrayToCompare, responseToWin);
     }
 }

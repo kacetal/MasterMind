@@ -1,13 +1,27 @@
+/**
+ * package contain all the functions need for the game
+ */
 package fr.kacetal.mastermind.controller.functions;
 
+import fr.kacetal.mastermind.controller.ArraysComparator;
 import fr.kacetal.mastermind.controller.MastermindComparator;
 import fr.kacetal.mastermind.model.Game;
+import fr.kacetal.mastermind.model.GameMode;
+import fr.kacetal.mastermind.model.GameType;
 import fr.kacetal.mastermind.model.SecretBlock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 
+/**
+ * Class overrides the method {@link MastermindChallengerFunction#play()}
+ * for {@link GameType#MASTERMIND} and for {@link GameMode#CHALLENGER}
+ *
+ * @author Artem
+ * @see MastermindComparator
+ * @see ArraysComparator
+ */
 public class MastermindChallengerFunction extends MastermindComparator {
 
     public static final Logger LOGGER = LogManager.getLogger(MastermindChallengerFunction.class.getName());
@@ -17,7 +31,6 @@ public class MastermindChallengerFunction extends MastermindComparator {
     public MastermindChallengerFunction(Game game) {
         super(game);
     }
-
 
     @Override
     public void play() {
@@ -29,11 +42,11 @@ public class MastermindChallengerFunction extends MastermindComparator {
 
         LOGGER.info("Secret Block is " + Arrays.toString(secretArray));
 
-        System.out.printf("Devinez un nombre qui contient %d chiffres.%n", game.getSecretBlockLongeur());
+        System.out.printf("Devinez un nombre qui contient %d chiffres.%n", game.getSecretBlockLength());
         System.out.printf("Les chiffres sont disponibles de 0 à %d%n", (game.getNmbrUtilisable() - 1));
 
         while (true) {
-            LOGGER.info("Il y a encore {}", nbrOfTry);
+            LOGGER.info("There are {} try", nbrOfTry);
 
             System.out.printf("Il y a encore %d", nbrOfTry);
             System.out.println(gamePlayDialog.nbrOfTryDlg(nbrOfTry--));
@@ -42,7 +55,7 @@ public class MastermindChallengerFunction extends MastermindComparator {
 
             responseArray = (responseBlock = getPlayerResponse()).getArrOfNbr();
 
-            LOGGER.info("player response is " + Arrays.toString(responseArray));
+            LOGGER.info("Player response is " + Arrays.toString(responseArray));
 
             System.out.println("Votre reponse: |" + responseBlock + "|");
 
@@ -51,7 +64,7 @@ public class MastermindChallengerFunction extends MastermindComparator {
             }
 
             arrDiff = arrCompare(secretArray, responseArray);
-            hint = intArrToStrNormalizer(arrDiff);
+            hint = parseStringFromArray(arrDiff);
 
             LOGGER.info(hint);
 
@@ -60,18 +73,18 @@ public class MastermindChallengerFunction extends MastermindComparator {
             if (isWinner(arrDiff)) {
                 System.out.println("Félicitation! Vous avez gagné!");
                 System.out.println("Il y a encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
-                LOGGER.info("Félicitation! Vous avez gagné!");
-                LOGGER.info("Il y a encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
+                LOGGER.info("You win.");
+                LOGGER.info("There are" + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
                 break;
             } else if (nbrOfTry <= 0) {
                 System.out.println("Mauvaise reponse.\nVous n'avez plus d'essai.\nPerdu!");
                 System.out.println("Vraie reponse: |" + secretBlock + "|");
-                LOGGER.info("Mauvaise reponse. Vous n'avez plus d'essai. Perdu!");
+                LOGGER.info("Bad response. You have no try. You lost.");
                 break;
             }
 
             System.out.println("Mauvaise reponse.\n");
-            LOGGER.info("Mauvaise reponse.");
+            LOGGER.info("Bad response.");
             pause(1000);
         }
     }

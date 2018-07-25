@@ -4,7 +4,9 @@
 package fr.kacetal.mastermind.model;
 
 /**
- * @author artem
+ * All the type of the game
+ *
+ * @author Artem
  *
  */
 public enum GameType {
@@ -36,8 +38,6 @@ public enum GameType {
     }
 
     /**
-     * (non-Javadoc)
-     *
      * @see java.lang.Object#toString()
      */
     @Override

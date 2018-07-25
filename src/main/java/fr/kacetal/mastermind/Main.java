@@ -15,10 +15,18 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * This is the main class in the package fr.kacetal.mastermind.
+ * <p>
+ * Point of the entering in tne programme
+ *
+ * @author Artem
+ * @version 1.0
+ */
 public class Main {
 
     private static final Logger LOGGER = LogManager.getLogger(Main.class.getName());
@@ -32,6 +40,17 @@ public class Main {
     private Path configPath = Paths.get(configDirectoryName, configFileName);
 
 
+    /**
+     * Method for verification the path to <i>config.properties</i>
+     * <p>
+     * If the application not found the <i>config.properties</i> in the directory
+     * <blockqoute><pre>
+     *     src/main/resources/config.properties
+     * </pre></blockqoute>
+     *
+     * It copes <i>config.properties</i> from mastermind.jar file near to the mastermind.jar
+     *
+     */
     private void pathResourcesConfig() {
         LOGGER.debug("Entering in the method \"pathResourcesConfig()\"");
 
@@ -56,6 +75,14 @@ public class Main {
         new Main().play();
     }
 
+    /**
+     * Method inputs all the functions in the
+     * <blockqoute><pre>
+     *     {@code Map<GameType, Map<GameMode, ? extends ArraysComparator>> typeBehaviour}
+     * </pre></blockqoute>
+     *
+     * All the functions extend the class {@link ArraysComparator}.
+     */
     private void functionsInitializer() {
 
         LOGGER.debug("Entering in the method \"functionsInitializer()\"");
@@ -78,9 +105,14 @@ public class Main {
         LOGGER.debug("All behaviours are " + typeBehaviour.toString());
     }
 
-    private Game gameInitializateur() {
+    /**
+     * Method for create the new instance of {@link Game} by {@link Game.GameBuilder}
+     *
+     * @return {@link Game}
+     */
+    private Game gameInitializer() {
 
-        LOGGER.debug("Entering in the method \"gameInitializateur()\"");
+        LOGGER.debug("Entering in the method \"gameInitializer()\"");
 
         pathResourcesConfig();
 
@@ -88,13 +120,13 @@ public class Main {
         Game.GameBuilder builder = new Game.GameBuilder();
 
         LOGGER.debug("Return new game built by GameBuilder");
-        return builder.setDevMode(dialog.isDeveloppeur())
-                      .setGameType(dialog.getGameType())
-                      .setGameMode(dialog.getGameMode())
-                      .setSecretBlockLength(configPath)
-                      .setTryNumber(configPath)
-                      .setNmbrUtilisable(configPath)
-                      .buildGame();
+        return builder.setDevMode(dialog.isDeveloper())
+                .setGameType(dialog.getGameType())
+                .setGameMode(dialog.getGameMode())
+                .setSecretBlockLength(configPath)
+                .setTryNumber(configPath)
+                .setNmbrUtilisable(configPath)
+                .buildGame();
     }
 
     private void play() {
@@ -104,7 +136,7 @@ public class Main {
         mode:
         while (true) {
 
-            game = gameInitializateur();
+            game = gameInitializer();
 
             functionsInitializer();
 

@@ -52,13 +52,13 @@ public class RechercheDefenseFunction extends RechercheComparator {
 
         String limMIN, limMAX;
 
-        System.out.println("Faire un nombre de " + game.getSecretBlockLongeur() + " chiffres");
+        System.out.println("Faire un nombre de " + game.getSecretBlockLength() + " chiffres");
 
         secretArray = (secretBlock = getPlayerResponse()).getArrOfNbr();
 
-        minAILimit = IntStream.generate(() -> 0).limit(game.getSecretBlockLongeur()).toArray();
-        maxAILimit = IntStream.generate(() -> 9).limit(game.getSecretBlockLongeur()).toArray();
-        responseArray = IntStream.generate(() -> 5).limit(game.getSecretBlockLongeur()).toArray();
+        minAILimit = IntStream.generate(() -> 0).limit(game.getSecretBlockLength()).toArray();
+        maxAILimit = IntStream.generate(() -> 9).limit(game.getSecretBlockLength()).toArray();
+        responseArray = IntStream.generate(() -> 5).limit(game.getSecretBlockLength()).toArray();
 
         responseBlock = new SecretBlock(responseArray);
 
@@ -68,7 +68,7 @@ public class RechercheDefenseFunction extends RechercheComparator {
             System.out.println(gamePlayDialog.nbrOfTryDlg(nbrOfTry--));
 
             arrDiffAI = arrCompare(secretArray, responseArray);
-            hint = intArrToStrNormalizer(arrDiffAI);
+            hint = parseStringFromArray(arrDiffAI);
 
             System.out.println();
 
@@ -89,9 +89,9 @@ public class RechercheDefenseFunction extends RechercheComparator {
                 break;
             } else if (!hint.equals(responseToWin)) {
                 System.out.println("Mauvaise reponse.\n");
-                responseLimitsAnalyze(minAILimit, maxAILimit, responseArray, arrDiffAI, game.getSecretBlockLongeur());
+                responseLimitsAnalyze(minAILimit, maxAILimit, responseArray, arrDiffAI, game.getSecretBlockLength());
                 System.out.print("Nombre calculé: |");
-                responseAIGenerator(minAILimit, maxAILimit, responseArray, game.getSecretBlockLongeur());
+                responseAIGenerator(minAILimit, maxAILimit, responseArray, game.getSecretBlockLength());
                 responseBlock = new SecretBlock(responseArray);
             } else if (hint.equals(responseToWin)) {
                 System.out.println("Perdu! AI a gagné!");

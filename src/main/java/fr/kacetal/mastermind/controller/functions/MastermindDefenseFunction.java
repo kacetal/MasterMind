@@ -24,12 +24,12 @@ public class MastermindDefenseFunction extends MastermindComparator {
     @Override
     public void play() {
         LOGGER.info("Entering in the method play()");
-        listOfAllValues = getListOfAllValues(game.getSecretBlockLongeur(), game.getNmbrUtilisable());
+        listOfAllValues = getListOfAllValues(game.getSecretBlockLength(), game.getNmbrUtilisable());
         nbrOfTry = game.getTryNumber();
 
         LOGGER.info("Number of try is {}", nbrOfTry);
 
-        System.out.println("Faire un nombre qui contient " + game.getSecretBlockLongeur() + " chiffres.");
+        System.out.println("Faire un nombre qui contient " + game.getSecretBlockLength() + " chiffres.");
         System.out.println("Les chiffres sont disponibles de 0 à " + (game.getNmbrUtilisable() - 1));
 
         secretArray = (secretBlock = getPlayerResponse(game.getNmbrUtilisable())).getArrOfNbr();
@@ -37,9 +37,9 @@ public class MastermindDefenseFunction extends MastermindComparator {
         LOGGER.info("Secret Block is {}", Arrays.toString(secretArray));
 
         responseArray = IntStream
-                .range(0, game.getSecretBlockLongeur())
+                .range(0, game.getSecretBlockLength())
                 .map(i -> {
-                    if (i < game.getSecretBlockLongeur() / 2) return 0;
+                    if (i < game.getSecretBlockLength() / 2) return 0;
                     else return 1;
                 })
                 .toArray();
@@ -64,7 +64,7 @@ public class MastermindDefenseFunction extends MastermindComparator {
             System.out.println(gamePlayDialog.nbrOfTryDlg(nbrOfTry--));
 
             arrDiffAI = arrCompare(secretArray, responseArray);
-            hint = intArrToStrNormalizer(arrDiffAI);
+            hint = parseStringFromArray(arrDiffAI);
 
             System.out.println();
 

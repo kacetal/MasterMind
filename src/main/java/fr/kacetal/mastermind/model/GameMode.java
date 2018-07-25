@@ -4,7 +4,9 @@
 package fr.kacetal.mastermind.model;
 
 /**
- * @author artem
+ * All the modes of the game
+ *
+ * @author Artem
  *
  */
 public enum GameMode {

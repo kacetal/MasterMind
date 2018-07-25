@@ -30,7 +30,7 @@ public class MastermindDuelFunction extends MastermindComparator {
     public void play() {
 
         //create list of all values possible
-        listOfAllValues = getListOfAllValues(game.getSecretBlockLongeur(), game.getNmbrUtilisable());
+        listOfAllValues = getListOfAllValues(game.getSecretBlockLength(), game.getNmbrUtilisable());
         //Refresh number of try for new game
         nbrOfTry = game.getTryNumber();
 
@@ -38,14 +38,14 @@ public class MastermindDuelFunction extends MastermindComparator {
         secretBlock = new SecretBlock(game, game.getGameType());
         secretArray = secretBlock.getArrOfNbr();
 
-        System.out.printf("Devinez un nombre qui contient %d chiffres.%n", game.getSecretBlockLongeur());
+        System.out.printf("Devinez un nombre qui contient %d chiffres.%n", game.getSecretBlockLength());
         System.out.printf("Les chiffres sont disponibles de 0 à %d.%n", (game.getNmbrUtilisable() - 1));
 
         //Initialize first response par default, par example for 4 elements [0, 0, 1, 1]
         responseAIArray = IntStream
-                .range(0, game.getSecretBlockLongeur())
+                .range(0, game.getSecretBlockLength())
                 .map(i -> {
-                    if (i < game.getSecretBlockLongeur() / 2) return 0;
+                    if (i < game.getSecretBlockLength() / 2) return 0;
                     else return 1;
                 })
                 .toArray();
@@ -73,15 +73,15 @@ public class MastermindDuelFunction extends MastermindComparator {
             //get array with hint for player
             arrDiffPlayer = arrCompare(secretArray, responsePlayerArray);
             //get String with hint for player
-            astucePlayer = intArrToStrNormalizer(arrDiffPlayer);
+            astucePlayer = parseStringFromArray(arrDiffPlayer);
 
             //get array with hint for AI
             arrDiffAI = arrCompare(secretArray, responseAIArray);
             //get String with hint for AI
-            astuceAI = intArrToStrNormalizer(arrDiffAI);
+            astuceAI = parseStringFromArray(arrDiffAI);
 
             System.out.print("AI calcule...: |");
-            for (int i = 0; i < game.getSecretBlockLongeur(); i++) {
+            for (int i = 0; i < game.getSecretBlockLength(); i++) {
                 System.out.print('*');
                 pause(1000);
             }

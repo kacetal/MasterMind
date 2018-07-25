@@ -10,8 +10,9 @@ import java.nio.file.Path;
 import java.util.Properties;
 
 /**
- * @author artem
+ * Class contains all the parameters of the game
  *
+ * @author Artem
  */
 public class Game {
 
@@ -21,7 +22,7 @@ public class Game {
 
     private final int tryNumber;
 
-    private final int secretBlockLongeur;
+    private final int secretBlockLength;
 
     private final int nmbrUtilisable;
 
@@ -32,13 +33,14 @@ public class Game {
     private Game(final Game.GameBuilder builder) {
         this.isDevMode = builder.isDevMode;
         this.tryNumber = builder.tryNumber;
-        this.secretBlockLongeur = builder.secretBlockLength;
+        this.secretBlockLength = builder.secretBlockLength;
         this.nmbrUtilisable = builder.nmbrUtilisable;
         this.gameType = builder.gameType;
         this.gameMode = builder.gameMode;
     }
 
     /**
+     * Getter for developer mode.
      * @return the isDevMode
      */
     public boolean isDevMode() {
@@ -46,6 +48,7 @@ public class Game {
     }
 
     /**
+     * Getter for the numbers of try for the Game
      * @return the tryNumber
      */
     public int getTryNumber() {
@@ -53,17 +56,24 @@ public class Game {
     }
 
     /**
+     * Getter for the length maximal for the secret block
      * @return the secretBlockLength
      */
-    public int getSecretBlockLongeur() {
-        return secretBlockLongeur;
+    public int getSecretBlockLength() {
+        return secretBlockLength;
     }
 
+    /**
+     * Getter for figures maximal
+     *
+     * @return the nmbrUtilisable
+     */
     public int getNmbrUtilisable() {
         return nmbrUtilisable;
     }
 
     /**
+     * Getter for the type of the game
      * @return the gameType
      */
     public GameType getGameType() {
@@ -71,13 +81,14 @@ public class Game {
     }
 
     /**
+     * Getter for the mode of the game
      * @return the gameMode
      */
     public GameMode getGameMode() {
         return gameMode;
     }
 
-    /*
+    /**
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -87,12 +98,12 @@ public class Game {
         result = prime * result + ((gameMode == null) ? 0 : gameMode.hashCode());
         result = prime * result + ((gameType == null) ? 0 : gameType.hashCode());
         result = prime * result + (isDevMode ? 1231 : 1237);
-        result = prime * result + secretBlockLongeur;
+        result = prime * result + secretBlockLength;
         result = prime * result + tryNumber;
         return result;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -116,21 +127,24 @@ public class Game {
         if (isDevMode != other.isDevMode) {
             return false;
         }
-        if (secretBlockLongeur != other.secretBlockLongeur) {
+        if (secretBlockLength != other.secretBlockLength) {
             return false;
         }
         return tryNumber == other.tryNumber;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         return "Game [isDevMode=" + isDevMode + ", tryNumber=" + tryNumber + ", secretBlockLength="
-                + secretBlockLongeur + ", gameType=" + gameType + ", gameMode=" + gameMode + "]";
+                + secretBlockLength + ", gameType=" + gameType + ", gameMode=" + gameMode + "]";
     }
 
+    /**
+     * Class builds the {@link Game}
+     */
     public static class GameBuilder {
 
         private boolean isDevMode;
@@ -146,7 +160,8 @@ public class Game {
         private GameMode gameMode;
 
         /**
-         * @param isDevMode the isDevMode to set
+         * @param isDevMode the developer mode to set
+         * @return GameBuilder
          */
         public GameBuilder setDevMode(boolean isDevMode) {
             this.isDevMode = isDevMode;
@@ -155,7 +170,8 @@ public class Game {
         }
 
         /**
-         * @param propertiesPath the tryNumber to set
+         * @param propertiesPath the number of the try to set
+         * @return GameBuilder
          */
         public GameBuilder setTryNumber(final Path propertiesPath) {
             try (InputStream input = new FileInputStream(propertiesPath.toFile())){
@@ -173,7 +189,8 @@ public class Game {
         }
 
         /**
-         * @param propertiesPath the secretBlockLength to set
+         * @param propertiesPath the path to config.properties
+         * @return GameBuilder
          */
         public GameBuilder setSecretBlockLength(final Path propertiesPath) {
             try (InputStream input = new FileInputStream(propertiesPath.toFile())){
@@ -190,6 +207,12 @@ public class Game {
             }
         }
 
+        /**
+         * Limit maximal can't be lower than 4
+         *
+         * @param propertiesPath the path to config.properties
+         * @return GameBuilder
+         */
         public GameBuilder setNmbrUtilisable(final Path propertiesPath) {
             try (InputStream input = new FileInputStream(propertiesPath.toFile())) {
                 Properties properties = new Properties();
@@ -217,6 +240,7 @@ public class Game {
 
         /**
          * @param gameType the gameType to set
+         * @return GameBuilder
          */
         public GameBuilder setGameType(GameType gameType) {
             this.gameType = gameType;
@@ -226,6 +250,7 @@ public class Game {
 
         /**
          * @param gameMode the gameMode to set
+         * @return GameBuilder
          */
         public GameBuilder setGameMode(GameMode gameMode) {
             this.gameMode = gameMode;
@@ -233,6 +258,10 @@ public class Game {
             return this;
         }
 
+        /**
+         * Method for building the {@link Game}
+         * @return Game
+         */
         public Game buildGame() {
             Game.LOGGER.info(new Game(this).toString());
             return new Game(this);

@@ -27,7 +27,7 @@ public class RechercheChallengerFunction extends RechercheComparator {
 
         LOGGER.info("Secret Block is " + Arrays.toString(secretArray));
 
-        System.out.println("Devinez nombre qui contient " + game.getSecretBlockLongeur() + " chiffres");
+        System.out.println("Devinez nombre qui contient " + game.getSecretBlockLength() + " chiffres");
 
         do {
             LOGGER.info("Il y a encore {}", nbrOfTry);
@@ -35,7 +35,7 @@ public class RechercheChallengerFunction extends RechercheComparator {
             System.out.print("Il y a encore " + nbrOfTry);
             System.out.println(gamePlayDialog.nbrOfTryDlg(nbrOfTry--));
 
-            System.out.print("Donnez un nombre de " + game.getSecretBlockLongeur() + " chiffres:");
+            System.out.print("Donnez un nombre de " + game.getSecretBlockLength() + " chiffres:");
 
             responseArray = (responseBlock = getPlayerResponse()).getArrOfNbr();
 
@@ -76,6 +76,6 @@ public class RechercheChallengerFunction extends RechercheComparator {
 
 
     private String getAstuce() {
-        return intArrToStrNormalizer(arrCompare(secretArray, responseArray));
+        return parseStringFromArray(arrCompare(secretArray, responseArray));
     }
 }
