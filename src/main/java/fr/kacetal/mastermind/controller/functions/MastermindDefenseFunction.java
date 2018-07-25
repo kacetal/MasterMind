@@ -103,8 +103,8 @@ public class MastermindDefenseFunction extends MastermindComparator {
                     pause(3000);
                 }
 
-                LOGGER.debug(nbrEliminated + "{ numbers was deleted");
-                LOGGER.debug(nbrActuel + "");
+                LOGGER.debug("{} numbers was deleted", nbrEliminated);
+                LOGGER.debug("There are {} figures left", nbrActuel);
             }
         }
     }

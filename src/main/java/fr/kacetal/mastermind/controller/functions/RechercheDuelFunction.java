@@ -3,15 +3,19 @@ package fr.kacetal.mastermind.controller.functions;
 import fr.kacetal.mastermind.controller.RechercheComparator;
 import fr.kacetal.mastermind.model.Game;
 import fr.kacetal.mastermind.model.SecretBlock;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static fr.kacetal.mastermind.controller.functions.RechercheDefenseFunction.responseLimitsAnalyze;
+import static fr.kacetal.mastermind.controller.functions.RechercheDefenseFunction.responseLimitsReduce;
 
 public class RechercheDuelFunction extends RechercheComparator {
+
+    public static final Logger LOGGER = LogManager.getLogger(RechercheDuelFunction.class.getName());
 
     private SecretBlock responsePlayerBlock;
 
@@ -31,10 +35,13 @@ public class RechercheDuelFunction extends RechercheComparator {
 
     @Override
     public void play() {
+        LOGGER.info("Entering in the method play()");
         nbrOfTry = game.getTryNumber();
 
         secretBlock = new SecretBlock(game);
         secretArray = secretBlock.getArrOfNbr();
+
+        LOGGER.info("Secret Block is {}", secretBlock.toString());
 
         String limMIN, limMAX;
 
@@ -42,7 +49,6 @@ public class RechercheDuelFunction extends RechercheComparator {
 
         minAILimit = IntStream.generate(() -> 0).limit(game.getSecretBlockLength()).toArray();
         maxAILimit = IntStream.generate(() -> 9).limit(game.getSecretBlockLength()).toArray();
-        responseAIArray = IntStream.generate(() -> 5).limit(game.getSecretBlockLength()).toArray();
 
         boolean firstLoop = true;
 
@@ -80,6 +86,14 @@ public class RechercheDuelFunction extends RechercheComparator {
                 System.out.println("Astuce pour AI:  |" + astuceAI + "|");
             }
 
+            LOGGER.info("Response of the player is {}", responsePlayerBlock.toString());
+            LOGGER.info("Hint for Player is {}", hintForPlayer);
+            LOGGER.info("Response of the AI is {}", responseAIBlock.toString());
+            LOGGER.info("Hint for AI is {}", hintForAI);
+
+            LOGGER.debug("Limit max is {}", Arrays.toString(maxAILimit));
+            LOGGER.debug("Limit min is {}", Arrays.toString(minAILimit));
+
             if (game.isDevMode()) {
                 limMIN = Arrays.stream(minAILimit).mapToObj(String::valueOf).collect(Collectors.joining());
                 limMAX = Arrays.stream(maxAILimit).mapToObj(String::valueOf).collect(Collectors.joining());
@@ -94,27 +108,34 @@ public class RechercheDuelFunction extends RechercheComparator {
             if (astucePlayer.equals(astuceAI) && isWinner(astucePlayer)) {
                 System.out.println("La partie NULL!");
                 System.out.println("Nombre caché est:|" + secretBlock + "|");
+                LOGGER.info("Tae game");
+                LOGGER.info("Secret block is {}", secretBlock.toString());
                 break;
             } else if (isWinner(astucePlayer)) {
                 System.out.println("Félicitation! Vous avez gagné!");
                 System.out.println("Il y a encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
                 System.out.println("Nombre caché est:|" + secretBlock + "|");
+                LOGGER.info("Player win. AI lost");
+                LOGGER.info("There are {} number of try", nbrOfTry);
                 break;
             } else if (isWinner(astuceAI)) {
                 System.out.println("Perdu! AI a gagné!");
                 System.out.println("Il y a encore " + nbrOfTry + gamePlayDialog.nbrOfTryDlg(nbrOfTry));
                 System.out.println("Nombre caché est:|" + secretBlock + "|");
+                LOGGER.info("Player lost. AI win");
+                LOGGER.info("There are {} number of try", nbrOfTry);
                 break;
             } else if (nbrOfTry <= 0) {
                 System.out.println("Il n'y a plus d'essai!");
-                System.out.println("Vous et AI êtes perdu!");
+                System.out.println("AI et vous êtes perdu!");
                 System.out.println("Nombre caché est:|" + secretBlock + "|");
+                LOGGER.info("Player lost. AI lost");
+                LOGGER.info("Secret block is {}", secretBlock.toString());
                 break;
             }
             System.out.println("Mauvaise reponse.\n");
             pause(1000);
-            responseLimitsAnalyze(minAILimit, maxAILimit, responseAIArray, arrDiffAI, game.getSecretBlockLength());
-
+            responseLimitsReduce(minAILimit, maxAILimit, responseAIArray, arrDiffAI, game.getSecretBlockLongeur());
         } while (true);
     }
 
