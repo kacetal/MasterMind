@@ -1,7 +1,10 @@
 package fr.kacetal.mastermind.controller.functions;
 
+import fr.kacetal.mastermind.controller.ArraysComparator;
 import fr.kacetal.mastermind.controller.RechercheComparator;
 import fr.kacetal.mastermind.model.Game;
+import fr.kacetal.mastermind.model.GameMode;
+import fr.kacetal.mastermind.model.GameType;
 import fr.kacetal.mastermind.model.SecretBlock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +14,15 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Class overrides the method {@link RechercheDefenseFunction#play()}
+ * inherited from {@link RechercheComparator#play()}<p>
+ * Game's settings {@link GameType#RECHERCHE} and {@link GameMode#DEFENSEUR}
+ *
+ * @author Artem
+ * @see RechercheComparator
+ * @see ArraysComparator
+ */
 public class RechercheDefenseFunction extends RechercheComparator {
 
     public static final Logger LOGGER = LogManager.getLogger(RechercheDefenseFunction.class.getName());

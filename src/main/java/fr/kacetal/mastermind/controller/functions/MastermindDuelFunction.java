@@ -1,13 +1,25 @@
 package fr.kacetal.mastermind.controller.functions;
 
+import fr.kacetal.mastermind.controller.ArraysComparator;
 import fr.kacetal.mastermind.controller.MastermindComparator;
 import fr.kacetal.mastermind.model.Game;
+import fr.kacetal.mastermind.model.GameMode;
+import fr.kacetal.mastermind.model.GameType;
 import fr.kacetal.mastermind.model.SecretBlock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.stream.IntStream;
 
+/**
+ * Class overrides the method {@link MastermindDuelFunction#play()}
+ * inherited from {@link MastermindComparator#play()}<p>
+ * Game's settings {@link GameType#MASTERMIND} and {@link GameMode#DUEL}
+ *
+ * @author Artem
+ * @see MastermindComparator
+ * @see ArraysComparator
+ */
 public class MastermindDuelFunction extends MastermindComparator {
 
     public static final Logger LOGGER = LogManager.getLogger(MastermindDuelFunction.class.getName());

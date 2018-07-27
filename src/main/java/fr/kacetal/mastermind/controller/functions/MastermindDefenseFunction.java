@@ -1,7 +1,10 @@
 package fr.kacetal.mastermind.controller.functions;
 
+import fr.kacetal.mastermind.controller.ArraysComparator;
 import fr.kacetal.mastermind.controller.MastermindComparator;
 import fr.kacetal.mastermind.model.Game;
+import fr.kacetal.mastermind.model.GameMode;
+import fr.kacetal.mastermind.model.GameType;
 import fr.kacetal.mastermind.model.SecretBlock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,6 +12,15 @@ import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+/**
+ * Class overrides the method {@link MastermindDefenseFunction#play()}
+ * inherited from {@link MastermindComparator#play()}<p>
+ * Game's settings {@link GameType#MASTERMIND} and {@link GameMode#DEFENSEUR}
+ *
+ * @author Artem
+ * @see MastermindComparator
+ * @see ArraysComparator
+ */
 public class MastermindDefenseFunction extends MastermindComparator {
 
     public static final Logger LOGGER = LogManager.getLogger(MastermindDefenseFunction.class.getName());

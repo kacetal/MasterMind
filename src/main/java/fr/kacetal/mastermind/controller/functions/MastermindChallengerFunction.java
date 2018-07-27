@@ -16,7 +16,8 @@ import java.util.Arrays;
 
 /**
  * Class overrides the method {@link MastermindChallengerFunction#play()}
- * for {@link GameType#MASTERMIND} and for {@link GameMode#CHALLENGER}
+ * inherited from {@link MastermindComparator#play()}<p>
+ * Game's settings {@link GameType#MASTERMIND} and {@link GameMode#CHALLENGER}
  *
  * @author Artem
  * @see MastermindComparator
