@@ -118,11 +118,11 @@ public class GameInitDialog {
 
                 choice = (char) System.in.read();
 
-                /*
+
                 do {
                     ignore = (char) System.in.read();
                 } while (ignore != '\n');
-                */
+
 
             } while (getNumericValue(choice) <= 0 || limit < getNumericValue(choice));
         } catch (IOException e) {

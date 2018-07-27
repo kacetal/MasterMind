@@ -178,6 +178,10 @@ public class Game {
                 Properties properties = new Properties();
                 properties.load(input);
                 this.tryNumber = new Integer(properties.getProperty("tryNumber"));
+                Game.LOGGER.info("Number of try from file is " + tryNumber);
+                if (this.tryNumber < 1) {
+                    this.tryNumber = 1;
+                }
                 Game.LOGGER.info("Number of try is " + tryNumber);
                 return this;
             } catch (IOException ex) {
@@ -196,8 +200,8 @@ public class Game {
             try (InputStream input = new FileInputStream(propertiesPath.toFile())){
                 Properties properties = new Properties();
                 properties.load(input);
-                this.secretBlockLength = new Integer(properties.getProperty("secretBlockLongeur"));
-                Game.LOGGER.info("Length of SecretBlock is " + secretBlockLength);
+                this.secretBlockLength = new Integer(properties.getProperty("secretBlockLength"));
+                Game.LOGGER.info("Length of SecretBlock is {}", secretBlockLength);
                 return this;
             } catch (IOException ex) {
                 Game.LOGGER.error("IOException " + ex.getMessage());
@@ -217,18 +221,16 @@ public class Game {
             try (InputStream input = new FileInputStream(propertiesPath.toFile())) {
                 Properties properties = new Properties();
                 properties.load(input);
-                int nmbrFromFile = new Integer(properties.getProperty("nmbrUtilisable"));
-                Game.LOGGER.info("Numbers of figures are [0 - " + nmbrFromFile + ")");
-                if (nmbrFromFile < 4) {
+                this.nmbrUtilisable = new Integer(properties.getProperty("nmbrUtilisable"));
+                Game.LOGGER.info("Number of figures from file is {}", this.nmbrUtilisable);
+                if (this.nmbrUtilisable <= 4) {
                     Game.LOGGER.warn("Numbers of figures minimum is 4. nmbrUtilisable = 4");
                     this.nmbrUtilisable = 4;
-                } else if (nmbrFromFile >= 10) {
+                } else if (this.nmbrUtilisable >= 10) {
                     Game.LOGGER.warn("Numbres of figures maximum is 10. nmbrUtilisable = 10");
                     this.nmbrUtilisable = 10;
-                } else {
-                    Game.LOGGER.info("Numbres of figures is " + nmbrFromFile);
-                    this.nmbrUtilisable = nmbrFromFile;
                 }
+                Game.LOGGER.info("Number of figures in the game is [0 - {}]", (this.nmbrUtilisable - 1));
                 return this;
             } catch (IOException ex) {
                 Game.LOGGER.error("IOException " + ex.getMessage());
