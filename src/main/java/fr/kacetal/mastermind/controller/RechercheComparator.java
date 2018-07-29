@@ -38,8 +38,9 @@ public class RechercheComparator extends ArraysComparator {
     }
 
     /**
-     * Method parses an Array as the String {@code "=+-="} for example.
+     * Method parses an Array as a String {@code "=+-="}.
      * <p>
+     *      For example:
      * <blockqoute><pre>
      *     int -1 -> String "-"
      *     int  0 -> String "="
@@ -58,10 +59,10 @@ public class RechercheComparator extends ArraysComparator {
     }
 
     /**
-     * Method compare a String with {@link RechercheComparator#responseToWin}
+     * Method compares a String with {@link RechercheComparator#responseToWin}
      *
      * @param hint a String to compare with {@link RechercheComparator#responseToWin}
-     * @return true if the String equals to {@link RechercheComparator#responseToWin}
+     * @return true if the String is equal to {@link RechercheComparator#responseToWin}
      */
     protected boolean isWinner(String hint) {
         return hint.equals(responseToWin);

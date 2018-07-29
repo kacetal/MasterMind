@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 /**
  * Main class for the game functions
  * <p>
- * Class contain the method for comparing the arrays
+ * Class contains methods to work with arrays
  *
  * @author Artem
  * @see MastermindComparator

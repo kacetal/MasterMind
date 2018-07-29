@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
- * Class wrapper for store an array of numbers.
+ * Class wrapper stores an array of numbers.
  *
  * @author Artem
  */

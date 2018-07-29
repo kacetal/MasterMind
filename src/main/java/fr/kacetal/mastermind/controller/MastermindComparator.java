@@ -32,7 +32,7 @@ public class MastermindComparator extends ArraysComparator {
     }
 
     /**
-     * Creation the list of all the possible values
+     * The method creates the list of all the possible values
      *
      * @param lengthOfNumber
      * @param figureMaximal
@@ -66,7 +66,7 @@ public class MastermindComparator extends ArraysComparator {
 
     /**
      * Method compares two arrays and<p>
-     * returns an array contains two int {goodPlace, present}
+     * returns an array which contains two int {goodPlace, present}
      *
      * @param secretArray
      * @param responseArray

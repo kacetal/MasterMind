@@ -41,14 +41,12 @@ public class Main {
 
 
     /**
-     * Method for verification the path to <i>config.properties</i>
+     * The method checks the path to <i>config.properties</i>.
      * <p>
-     * If the application not found the <i>config.properties</i> in the directory
-     * <blockqoute><pre>
-     *     src/main/resources/config.properties
-     * </pre></blockqoute>
-     *
-     * It copes <i>config.properties</i> from mastermind.jar file near to the mastermind.jar
+     * If the application does not find the <i>config.properties</i>
+     * in the directory {@code src/main/resources/config.properties},
+     * it will copy <i>config.properties</i> from the mastermind.jar file
+     * and put it next to the mastermind.jar.
      *
      */
     private void pathResourcesConfig() {
@@ -106,7 +104,7 @@ public class Main {
     }
 
     /**
-     * Method for create the new instance of {@link Game} by {@link Game.GameBuilder}
+     * The method creates a new instance of {@link Game} by {@link Game.GameBuilder}
      *
      * @return {@link Game}
      */
