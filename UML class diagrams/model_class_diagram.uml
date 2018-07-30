@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="225.0" y="0.0">fr.kacetal.mastermind.model.GameMode</node>
+    <node x="137.98863636363635" y="236.0">fr.kacetal.mastermind.model.Game.GameBuilder</node>
+    <node x="27.62500000000003" y="947.0">fr.kacetal.mastermind.model.SecretBlock</node>
+    <node x="0.0" y="11.0">fr.kacetal.mastermind.model.GameType</node>
+    <node x="132.6818181818182" y="623.0">fr.kacetal.mastermind.model.Game</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="fr.kacetal.mastermind.model.Game" target="fr.kacetal.mastermind.model.Game.GameBuilder">
+      <point x="-36.0" y="-137.0" />
+      <point x="192.6818181818182" y="583.0" />
+      <point x="162.36363636363635" y="583.0" />
+      <point x="-73.125" y="158.5" />
+    </edge>
+    <edge source="fr.kacetal.mastermind.model.Game" target="fr.kacetal.mastermind.model.GameMode">
+      <point x="84.0" y="-137.0" />
+      <point x="312.6818181818182" y="603.0" />
+      <point x="367.35227272727275" y="603.0" />
+      <point x="367.35227272727275" y="216.0" />
+      <point x="408.75" y="216.0" />
+      <point x="78.75" y="93.0" />
+    </edge>
+    <edge source="fr.kacetal.mastermind.model.Game.GameBuilder" target="fr.kacetal.mastermind.model.Game">
+      <point x="24.37500000000002" y="158.5" />
+      <point x="259.8636363636364" y="573.0" />
+      <point x="240.6818181818182" y="573.0" />
+      <point x="12.0" y="-137.0" />
+    </edge>
+    <edge source="fr.kacetal.mastermind.model.SecretBlock" target="fr.kacetal.mastermind.model.Game">
+      <point x="58.74999999999997" y="-115.0" />
+      <point x="203.875" y="922.0" />
+      <point x="228.6818181818182" y="922.0" />
+      <point x="0.0" y="137.0" />
+    </edge>
+    <edge source="fr.kacetal.mastermind.model.Game.GameBuilder" target="fr.kacetal.mastermind.model.GameMode">
+      <point x="24.37500000000003" y="-158.5" />
+      <point x="259.8636363636364" y="216.0" />
+      <point x="251.25" y="216.0" />
+      <point x="-78.75" y="93.0" />
+    </edge>
+    <edge source="fr.kacetal.mastermind.model.Game" target="fr.kacetal.mastermind.model.GameType">
+      <point x="-84.0" y="-137.0" />
+      <point x="144.6818181818182" y="603.0" />
+      <point x="77.94318181818181" y="603.0" />
+      <point x="77.94318181818181" y="206.0" />
+      <point x="61.5" y="206.0" />
+      <point x="-41.0" y="82.0" />
+    </edge>
+    <edge source="fr.kacetal.mastermind.model.SecretBlock" target="fr.kacetal.mastermind.model.GameType">
+      <point x="-58.75000000000003" y="-115.0" />
+      <point x="86.375" y="922.0" />
+      <point x="66.94318181818181" y="922.0" />
+      <point x="66.94318181818181" y="216.0" />
+      <point x="20.5" y="216.0" />
+      <point x="-82.0" y="82.0" />
+    </edge>
+    <edge source="fr.kacetal.mastermind.model.Game.GameBuilder" target="fr.kacetal.mastermind.model.GameType">
+      <point x="-73.12499999999997" y="-158.5" />
+      <point x="162.36363636363637" y="216.0" />
+      <point x="143.5" y="216.0" />
+      <point x="41.0" y="82.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="100.1688311688311" y="210.2272727272727" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
