@@ -170,6 +170,8 @@ public class Game {
         }
 
         /**
+         * It can't be less then 1.
+         *
          * @param propertiesPath the number of the try to set
          * @return GameBuilder
          */
@@ -193,6 +195,8 @@ public class Game {
         }
 
         /**
+         * It can't be less then 1.
+         *
          * @param propertiesPath the path to config.properties
          * @return GameBuilder
          */
@@ -201,6 +205,10 @@ public class Game {
                 Properties properties = new Properties();
                 properties.load(input);
                 this.secretBlockLength = new Integer(properties.getProperty("secretBlockLength"));
+                Game.LOGGER.info("Length of SecretBlock from file is {}", secretBlockLength);
+                if (secretBlockLength < 1) {
+                    secretBlockLength = 1;
+                }
                 Game.LOGGER.info("Length of SecretBlock is {}", secretBlockLength);
                 return this;
             } catch (IOException ex) {
@@ -212,7 +220,7 @@ public class Game {
         }
 
         /**
-         * Limit maximal can't be lower than 4
+         * It can't be less than 4 and more then 10.
          *
          * @param propertiesPath the path to config.properties
          * @return GameBuilder
