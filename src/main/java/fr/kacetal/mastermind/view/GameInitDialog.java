@@ -44,7 +44,7 @@ public class GameInitDialog {
      * @return {@link GameType}
      */
     public GameType getGameType() {
-        sb.append("Choisissez le type de joue:\n")
+        sb.append("Choisissez le type de jeu:\n")
                 .append("\t1. " + GameType.MASTERMIND.getName() + '\n')
                 .append("\t\t" + GameType.MASTERMIND.getExplication() + '\n')
                 .append("\t2. " + GameType.RECHERCHE.getName() + '\n')
@@ -63,7 +63,7 @@ public class GameInitDialog {
      * @return {@link GameMode}
      */
     public GameMode getGameMode() {
-        sb.append("Choisissez le mode de joue:\n")
+        sb.append("Choisissez le mode de jeu:\n")
                 .append("\t1. " + GameMode.CHALLENGER.getName() + '\n')
                 .append("\t\t" + GameMode.CHALLENGER.getExplication() + '\n')
                 .append("\t2. " + GameMode.DEFENSEUR.getName() + '\n')
