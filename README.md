@@ -32,9 +32,13 @@ File config.properties in the directory  mastermind/src/main/resources/config.pr
 
 `nmbrUtilisable=6` - Number of figures utilisable. Parameter can't be less than 4 and more then 10. For 4 it has [0 - 3] figures and for 10 it has [0 - 9] figures.
 
+`modeDeveloper=0` - Choice of the developer mode `0 = false` and `1 = true`.
+
 ## Executing
 
 You can use the command `java -jar target\mastermind.jar` in the root directory of the project or `start.bat` on Windows or `start.sh` on Linux.
+
+For developer mode use argument `java -jar target\mastermind.jar -dev`
 
 _For right encoding on Windows, before executing in the console, use the command:_ `chcp 1252`
 
