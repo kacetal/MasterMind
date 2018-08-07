@@ -68,9 +68,9 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String... args) {
         LOGGER.debug("Start the application");
-        new Main().play();
+        new Main().play(args);
     }
 
     /**
@@ -108,7 +108,7 @@ public class Main {
      *
      * @return {@link Game}
      */
-    private Game gameInitializer() {
+    private Game gameInitializer(String... args) {
 
         LOGGER.debug("Entering in the method \"gameInitializer()\"");
 
@@ -117,24 +117,32 @@ public class Main {
         LOGGER.debug("Creation Class GameBuilder");
         Game.GameBuilder builder = new Game.GameBuilder();
 
-        LOGGER.debug("Return new game built by GameBuilder");
-        return builder.setDevMode(dialog.isDeveloper())
-                .setGameType(dialog.getGameType())
+        if (args.length > 0 && args[0].equals("-dev")) {
+            builder.setDevMode(true);
+            System.out.println("Vous jouez en mode développeur");
+        } else {
+            builder.setDevMode(configPath);
+        }
+
+        LOGGER.debug("Create new game built by GameBuilder");
+        builder.setGameType(dialog.getGameType())
                 .setGameMode(dialog.getGameMode())
                 .setSecretBlockLength(configPath)
                 .setTryNumber(configPath)
-                .setNmbrUtilisable(configPath)
-                .buildGame();
+                .setNmbrUtilisable(configPath);
+
+
+        return builder.buildGame();
     }
 
-    private void play() {
+    private void play(String... args) {
 
         LOGGER.info("Entering in the method \"play()\" ");
 
         mode:
         while (true) {
 
-            game = gameInitializer();
+            game = gameInitializer(args);
 
             functionsInitializer();
 

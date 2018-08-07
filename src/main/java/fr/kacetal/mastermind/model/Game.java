@@ -165,8 +165,29 @@ public class Game {
          */
         public GameBuilder setDevMode(boolean isDevMode) {
             this.isDevMode = isDevMode;
+            Game.LOGGER.info("Developer mode is got from command line");
             Game.LOGGER.info("Developer mode is selected: " + isDevMode);
             return this;
+        }
+
+        public GameBuilder setDevMode(final Path propertiesPath) {
+            try (InputStream input = new FileInputStream(propertiesPath.toFile())) {
+                Properties properties = new Properties();
+                properties.load(input);
+                int isDevModeInt = new Integer(properties.getProperty("modeDeveloper"));
+                this.isDevMode = isDevModeInt == 1;
+                Game.LOGGER.info("Developer mode is got from file \"config.properties\"");
+                Game.LOGGER.info("Developer mode is selected: " + isDevMode);
+                if (this.isDevMode == true) {
+                    System.out.println("Vous jouez en mode développeur");
+                }
+                return this;
+            } catch (IOException e) {
+                this.isDevMode = false;
+                Game.LOGGER.info("IOException: ", e);
+                Game.LOGGER.info("Developer mode is selected: " + isDevMode);
+                return this;
+            }
         }
 
         /**
